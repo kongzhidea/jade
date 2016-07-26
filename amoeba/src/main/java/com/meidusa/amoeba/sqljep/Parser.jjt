@@ -1,0 +1,703 @@
+/*****************************************************************************
+      SQLJEP - Java SQL Expression Parser 0.2
+      November 1 2006
+         (c) Copyright 2006, Alexey Gaidukov
+      SQLJEP Author: Alexey Gaidukov
+
+      SQLJEP is based on JEP 2.24 (http://www.singularsys.com/jep/)
+           (c) Copyright 2002, Nathan Funk
+ 
+      See LICENSE.txt for license information.
+
+This file contains the grammar from which the parser is
+generated. The parser generation tools being used are JavaCC
+and its component JJTree. JJTree processes the .jjt file and
+generates the .jj file. This file is then used be JavaCC to
+generate the final java classes.
+
+Knowledge of parser generation is definetly beneficial if you
+are planning to make changes to this file. Although many parts
+are self explanitory, it is helpful to know how the grammar is
+handled by JJTree and JavaCC.
+
+You can follow the structure of the grammar by starting in the
+line which reads "ASTStart Start() #Start : {}". From there you
+will be able to trace the same path the parser follows when
+parsing an expression.
+
+The concept of precedence is very important. Since this is a
+recursive descent parser, it is easy to see which operators have
+higher order of precedence. The following table outlines the
+order incorporated in this grammar.
+
+Order of precedence (from lowest to highest):
+
+   || +   -         concatination addition, subtraction
+   *   /  		      multiplication, division
+   +   -            unary +/-
+   like             sql predicated
+
+The order of precedence is greatly inspired by the operator
+precedence of the C language. See "The C Programming Language"
+Kernighan & Richie 2nd Ed p.53. Java also uses a very similar
+precedence.
+
+***************************************************************/
+
+
+
+/***************************************************************
+OPTIONS
+***************************************************************/
+options {
+	JAVA_UNICODE_ESCAPE = true;
+	MULTI = true;
+	VISITOR = true;
+	NODE_DEFAULT_VOID = true;
+	STATIC = false;
+	IGNORE_CASE = true;
+	VISITOR_EXCEPTION = "ParseException";
+}
+
+
+/***************************************************************
+PARSER BEGIN
+***************************************************************/
+
+PARSER_BEGIN(Parser)
+package com.meidusa.amoeba.sqljep;
+
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import com.meidusa.amoeba.sqljep.function.*;
+import com.meidusa.amoeba.sqljep.variable.*;
+
+public abstract class Parser {
+	
+	private final static String metachars = "tnrbf\\\"";
+	private final static String chars = "\t\n\r\b\f\\\"";
+
+	public Node parseStream(java.io.Reader stream)
+							throws ParseException {
+		ReInit(stream);
+		// Parse the expression, and return the 
+		return Start().jjtGetChild(0);
+	}
+	
+	public abstract PostfixCommandI getFunction(String name);
+	
+	public abstract boolean containsKey(String key);
+	
+	private List<String> errorList = new ArrayList<String>();
+	
+	private Map<String,Integer> columnMapping;
+	private Map<String,Variable> variableMapping;
+	
+	public List<String> getErrorList(){
+		return errorList;
+	}
+	
+	
+	public Variable getVariable(String iden){
+		if(variableMapping == null){
+			return null;	
+		}else{
+			return variableMapping.get(iden);
+		}
+	}
+	
+	public void setVariableMapping(Map<String,Variable> variableMapping){
+		this.variableMapping = variableMapping;
+	}
+	public void setColumnMapping(Map<String,Integer> columnMapping){
+		this.columnMapping = columnMapping;
+	}
+	
+	public int findColumn(String name){
+		if (columnMapping != null) {
+			Integer v = columnMapping.get(name);
+			if (v != null) {
+				return v;
+			}
+		}
+		return -1;
+	}
+	
+	private void addToErrorList(String errorStr) {
+		errorList.add(errorStr);		
+	}
+
+	/**
+	 * Translate all escape sequences to characters. Inspired by Rob Millar's
+	 * unescape() method in rcm.util.Str fron the Web Sphinx project.
+	 *
+	 * @param inputStr String containing escape characters.
+	 * @return String with all escape sequences replaced.
+	 */
+	private static String replaceEscape(String inputStr) {
+		int len = inputStr.length();
+		int p = 0;
+		int i;
+		
+		StringBuilder output = new StringBuilder();
+		
+		while ((i = inputStr.indexOf('\\', p)) != -1) {
+			output.append(inputStr.substring(p, i));
+			
+			if (i+1 == len) break;
+			
+			// find metacharacter
+			char metac = inputStr.charAt(i+1);
+
+			// find the index of the metac
+			int k = metachars.indexOf(metac);
+			if (k == -1) {
+				// didn't find the metachar, leave sequence as found.
+				// This code should be unreachable if the parser
+				// is functioning properly because strings containing
+				// unknown escape characters should not be accepted.
+				output.append('\\');
+				output.append(metac);
+			} else {
+				// its corresponding true char
+				output.append(chars.charAt(k));   
+			}
+
+			// skip over both escape character & metacharacter
+			p = i + 2;
+		}
+
+		// add the end of the input string to the output
+		if (p < len)
+			output.append(inputStr.substring(p));
+		return output.toString();
+	}
+}
+
+PARSER_END(Parser)
+
+
+/***************************************************************
+SKIP
+***************************************************************/
+
+SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+}
+
+SPECIAL_TOKEN : /* COMMENTS */
+{
+ <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
+}
+
+/***************************************************************
+TOKENS
+***************************************************************/
+
+/* OPERATORS */
+TOKEN:
+{
+	< CONCAT:   "||"  >
+|	< PLUS: "+"  >
+|	< MINUS:"-"  >
+|	< MUL:  "*"  >
+|	< DIV:  "/"  >
+|	< DIV2:  "div"  >
+|	< MOD:  "mod"|"%" >
+|	< GT:   ">"  >
+|	< LT:   "<"  >
+|	< EQ:   "=" >
+|	< LE:   "<=" >
+|	< GE:   ">=" >
+|	< NE:   "!=" >
+|	< AND:  "and" >
+|	< OR:   "or" >
+|	< NOT:  "not"  >
+|	< IS_NULL:  "is null"  >
+|	< IS_NOT_NULL:  "is not null"  >
+|	< IN:  "in"  >
+|	< BETWEEN:  "between"  >
+|	< LIKE:  "like"  >
+|	< NOT_LIKE:  "not like"  >
+}
+
+
+TOKEN : /* LITERALS */
+{
+	< NULL_LITERAL: "null">
+|
+	< TRUE_LITERAL: "true">
+|
+	< FALSE_LITERAL: "false">
+|
+	< INTEGER_LITERAL:
+		<DECIMAL_LITERAL>
+	>
+|
+	< #DECIMAL_LITERAL: ["0"-"9"] (["0"-"9"])* >
+|
+	< FLOATING_POINT_LITERAL:
+		(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
+		| "." (["0"-"9"])+ (<EXPONENT>)?
+		| (["0"-"9"])+ <EXPONENT>
+	>
+|
+	< #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+	< STRING_LITERAL:
+		"'"
+		( (~["'","\\","\n","\r"])
+		| ("\\" ["n","t","b","r","f","\\","\""]	)
+		)*
+		"'"
+	>
+}
+
+/* IDENTIFIERS 
+	
+	Letters before version 2.22
+	< #LETTER: ["_","a"-"z","A"-"Z"] >
+*/
+
+TOKEN :
+{
+	< IDENTIFIER: ("`" <LETTER> (<LETTER>|"-"|<DIGIT>|<OTHER_LETTER>)* "`")|(<LETTER> (<LETTER>|<DIGIT>|<OTHER_LETTER>)*) >
+|
+	< #LETTER:
+	[
+/*		"\u003A",           // : Colon*/
+		"\u0041"-"\u005a",  // A - Z
+		"\u0061"-"\u007a",  // a - z
+		"\u00c0"-"\u00d6",  // Upper case symbols of Latin-1 Supplement
+		"\u00d8"-"\u00f6",  // Lower case symbols of Latin-1 Supplement
+		"\u00f8"-"\u00ff",  // More lower case symbols of Latin-1 Supplement
+		"\u0100"-"\u1fff",  // Many languages (including Greek)
+		"\u3040"-"\u318f",  // Hiragana, Katakana, Bopomofo, Hangul Compatibility Jamo
+		"\u3300"-"\u337f",  // CJK Compatibility
+		"\u3400"-"\u3d2d",  // CJK Unified Ideographs Extension A
+		"\u4e00"-"\u9fff",  // CJK Unified Ideographs
+		"\uf900"-"\ufaff"   // CJK Compatibility Ideographs
+	]
+	>	
+|
+	< #DIGIT: ["0"-"9"] >
+|
+	< #OTHER_LETTER: 
+        [
+		"\u005f",           // _
+		"\u002E"           // . Full stop
+        ]
+        >
+}
+
+/***************************************************************
+GRAMMAR START
+***************************************************************/
+
+ASTStart Start() #Start :
+{
+}
+{
+	Expression() <EOF> { return jjtThis; }
+	|  <EOF>
+	{
+		throw new ParseException("No expression entered");
+		addToErrorList("No expression entered");
+		return null;
+	}
+}
+
+/****
+	Expression with boolean result 
+*/
+
+void Expression() : {}
+{
+  OrExpression()
+}
+
+void OrExpression() :
+{
+}
+{
+	AndExpression()
+	(
+	  ( <OR> AndExpression()
+		{
+			jjtThis.setFunction(tokenImage[OR], new LogicalOR());
+		}
+	  ) #FunNode(2)
+	)*
+}
+
+
+void AndExpression() :
+{
+}
+{
+	EqualExpression()
+	(
+	  ( <AND> EqualExpression()
+		{
+			jjtThis.setFunction(tokenImage[AND], new LogicalAND());
+		}
+	  ) #FunNode(2)
+	)*
+}
+
+void EqualExpression() :
+{
+}
+{
+	RelationalExpression()
+	(
+	  ( <NE> RelationalExpression()
+	    {
+	    jjtThis.setFunction(tokenImage[NE], new ComparativeNE());
+	    }
+	  ) #FunNode(2)
+	|
+	  ( <EQ> RelationalExpression()
+	    {
+	      jjtThis.setFunction(tokenImage[EQ], new ComparativeEQ());
+	    }
+	  ) #FunNode(2)
+	)*
+}
+
+
+
+void RelationalExpression() :
+{
+}
+{
+  PostfixExpression()
+  (
+    ( <LT> PostfixExpression()
+      {
+	    jjtThis.setFunction(tokenImage[LT], new ComparativeLT());
+      }
+	) #FunNode(2)
+	|
+    ( <GT> PostfixExpression()
+      {
+        jjtThis.setFunction(tokenImage[GT], new ComparativeGT());
+      }
+    ) #FunNode(2)
+    |
+    ( <LE> PostfixExpression()
+      {
+	    jjtThis.setFunction(tokenImage[LE], new ComparativeLE());
+      }
+	) #FunNode(2)
+	|
+    ( <GE> PostfixExpression()
+      {
+        jjtThis.setFunction(tokenImage[GE], new ComparativeGE());
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void PostfixExpression() :
+{
+}
+{
+	AdditiveExpression()
+	[
+	  ( <IS_NOT_NULL> 
+		{
+		  jjtThis.setFunction(tokenImage[IS_NOT_NULL], new ComparativeIsNotNull());
+		}
+	  ) #FunNode(1)
+	|
+	  ( <IS_NULL>
+		{
+		  jjtThis.setFunction(tokenImage[IS_NULL], new ComparativeIsNull());
+		}
+	  ) #FunNode(1)
+	|
+	  ( <IN> Array()
+		{
+		  jjtThis.setFunction(tokenImage[IN], new In());
+		}
+	  ) #FunNode(2)
+	|
+	  ( <BETWEEN> AdditiveExpression() <AND> AdditiveExpression()
+		{
+		  jjtThis.setFunction(tokenImage[BETWEEN], new Between());
+		}
+	  ) #FunNode(3)
+	|
+	  ( <LIKE> AdditiveExpression()
+		{
+		  jjtThis.setFunction(tokenImage[LIKE], new Like());
+		}
+	  ) #FunNode(2)
+	|
+	  ( <NOT_LIKE> AdditiveExpression()
+		{
+		  jjtThis.setFunction(tokenImage[NOT_LIKE], new NotLike());
+		}
+	  ) #FunNode(2)
+  ]
+}
+
+
+void AdditiveExpression() :
+{
+}
+{
+  MultiplicativeExpression()
+  (
+    ( <CONCAT> MultiplicativeExpression()
+      {
+        jjtThis.setFunction(tokenImage[CONCAT], new Concat());
+      }
+    ) #FunNode(2)
+    |
+    ( <PLUS> MultiplicativeExpression()
+      {
+        jjtThis.setFunction(tokenImage[PLUS], new Add());
+      }
+    ) #FunNode(2)
+    |
+    ( <MINUS> MultiplicativeExpression()
+      {
+        jjtThis.setFunction(tokenImage[MINUS], new Subtract());
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void MultiplicativeExpression() :
+{
+}
+{
+  UnaryExpression()
+  (
+    ( <MUL> UnaryExpression()
+      {
+        jjtThis.setFunction(tokenImage[MUL], new Multiply());
+      }
+    ) #FunNode(2)
+	|
+    ( <DIV> UnaryExpression()
+      {
+        jjtThis.setFunction(tokenImage[DIV], new Divide());
+      }
+    ) #FunNode(2)
+	|
+    ( <DIV2> UnaryExpression()
+      {
+        jjtThis.setFunction(tokenImage[DIV2], new Divide());
+      }
+    ) #FunNode(2)
+	|
+    ( <MOD> UnaryExpression()
+      {
+        jjtThis.setFunction(tokenImage[MOD], new Modulus());
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void UnaryExpression() :
+{
+}
+{
+  ( <PLUS> UnaryExpression())
+|
+  ( <MINUS> UnaryExpression()
+    {
+	  jjtThis.setFunction(tokenImage[MINUS], new UMinus());
+    }
+  ) #FunNode(1)
+|
+  ( <NOT> UnaryExpression()
+    {
+	  jjtThis.setFunction(tokenImage[NOT], new LogicalNOT());
+    }
+  ) #FunNode(1)
+|
+  UnaryExpressionNotPlusMinus()
+}
+
+void UnaryExpressionNotPlusMinus() :
+{
+	String identString = "";
+	int type;
+}
+{
+	AnyConstant()
+|
+	( LOOKAHEAD({ getToken(1).kind == IDENTIFIER &&
+				  containsKey(getToken(1).image) })
+		Function()
+		|
+		Variable()
+	)
+	|
+	"(" Expression() ")"
+}
+
+
+void Variable() :
+{
+	String identString = "";
+}
+{
+	(identString = Identifier()
+	{
+		Variable c = getVariable(identString);
+		if (c != null) {
+			jjtThis.index = -1;
+			jjtThis.variable = c;
+		}
+		else {
+			int i = findColumn(identString);
+			if (i >= 0) {
+				jjtThis.index = i;
+				jjtThis.variable = null;
+			} 
+			else {
+				addToErrorList("Unrecognized symbol \"" + identString +"\"");
+			}
+		}
+	}
+	) #VarNode
+}
+
+
+void Function() :
+{
+	int reqArguments = 0;
+	String identString = "";
+}
+{
+	( identString = Identifier()
+		{
+			PostfixCommandI func = getFunction(identString);
+			if (func != null) {
+				//Set number of required arguments
+				reqArguments = func.getNumberOfParameters();
+				jjtThis.setFunction(identString, func);
+			} else {
+				addToErrorList("!!! Unrecognized function \"" + identString +"\"");
+			}
+		}
+		
+		"("ArgumentList(reqArguments, identString)")"
+		
+	) #FunNode
+}
+
+void ArgumentList(int reqArguments, String functionName) :
+{
+	int count = 0;
+	String errorStr = "";
+}
+{
+	[
+	Expression() { count++; }
+	(
+		","
+		Expression() { count++; }
+	)*
+	]
+    {
+    	if (reqArguments != count && reqArguments != -1) {
+			errorStr = "Function \"" + functionName +"\" requires "
+			           + reqArguments + " parameter";
+			if (reqArguments!=1) errorStr += "s";
+			addToErrorList(errorStr);
+		}
+    }
+}
+
+String Identifier() :
+{
+  Token t;
+}
+{
+	t=<IDENTIFIER>
+	{
+		if(t.image.startsWith("`")){
+			return t.image.substring(1,t.image.length()-1);	
+		}else
+		{
+			return t.image;
+		}
+	}
+}
+
+
+void Array() #Array:
+{
+}
+{
+	"("
+	AdditiveExpression()
+	(
+		","
+		AdditiveExpression()
+	)* 
+	")"
+}
+
+void AnyConstant() #Constant:
+{
+	Token t;
+}
+{
+	t=<NULL_LITERAL> {
+		jjtThis.value = null;
+	}
+	|
+	t=<TRUE_LITERAL> {
+		jjtThis.value = Boolean.TRUE;
+	}
+	|
+	t=<FALSE_LITERAL> {
+		jjtThis.value = Boolean.FALSE;
+	}
+	|
+	t=<STRING_LITERAL> {
+		// strip away double quotes at end of string
+		String temp = (t.image).substring(1,t.image.length()-1);
+		// replace escape characters
+		temp = replaceEscape(temp);
+		jjtThis.value = temp;
+	}
+	|
+	t=<INTEGER_LITERAL> {
+		try {
+			jjtThis.value = Long.valueOf(t.image);
+		} 
+		catch (Exception e) {
+			jjtThis.value = null;
+			addToErrorList("Can't parse \"" + t.image + "\"");
+		}
+	}
+	|
+	t=<FLOATING_POINT_LITERAL> {
+		try {
+			jjtThis.value = new BigDecimal(t.image);
+		} 
+		catch (Exception e) {
+			jjtThis.value = null;
+			addToErrorList("Can't parse \"" + t.image + "\"");
+		}
+	}
+}
+
