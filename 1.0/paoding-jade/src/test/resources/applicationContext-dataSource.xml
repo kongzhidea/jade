@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <!-- 读取properties文件 -->
+    <context:property-placeholder location="classpath:web.properties"/>
+
+    <!-- 这里使用Spring自带的DriverManagerDataSource，实际开发产品应该使用具有连接持管理的DataSource等 -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!-- 这里使用Spring自带的DriverManagerDataSource，实际开发产品应该使用具有连接持管理的DataSource等 -->
+    <!-- 配置主从 -->
+    <!--<bean id="base.dataSource"-->
+          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource" abstract="true">-->
+        <!--<property name="driverClassName" value="${jdbc.driver}"/>-->
+        <!--<property name="url" value="${jdbc.url}"/>-->
+        <!--<property name="username" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"></property>-->
+    <!--</bean>-->
+
+    <!--<bean id="writeSource" parent="base.dataSource"/>-->
+    <!--<bean id="readSource" parent="base.dataSource"/>-->
+
+    <!--<bean id="jade.dataSource"-->
+          <!--class="net.paoding.rose.jade.datasource.instances.MasterSlaverDataSource">-->
+        <!--<property name="master" ref="writeSource"/>-->
+        <!--<property name="slavers">-->
+            <!--<list>-->
+                <!--<ref bean="writeSource"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+</beans>

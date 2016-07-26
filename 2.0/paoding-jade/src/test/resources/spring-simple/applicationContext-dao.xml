@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-lazy-init="true">
+
+    <bean id="userDAO" class="net.paoding.rose.jade.context.spring.JadeFactoryBean">
+        <property name="objectType" value="net.paoding.rose.jade.dao.UserDAO"/>
+        <property name="dataAccessFactory" ref="jade.dataAccessFactory" />
+        <property name="rowMapperFactory" ref="jade.rowMapperFactory" />
+        <property name="interpreterFactory" ref="jade.interpreterFactory" />
+    </bean>
+</beans>
