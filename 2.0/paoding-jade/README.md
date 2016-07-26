@@ -21,10 +21,10 @@
      ```
     * MasterSlaverDataSource 可以配置主从数据源
     * 这里假设了mysql已经安装在本地了，用户名为test，密码为test。
-    * jade约定 先取 jade.dataSource.$catalog，  如果dao中没有配置catalog，则默认为 dao的类名。
     * jade约定了bean的id为jade.dataSource.classPackageName。
     * jade约定了这个bean的有效范围为classPackageName所有的DAO。
     * jade约定了除非有专门的定义，所有的子目录也受bean上的classpackageName所影响。
+    * jade约定 再取 jade.dataSource.$catalog，  如果dao中没有配置catalog，则默认为 dao的类名。
     * 最后取jade.dataSource和dataSource
 
 ##使用方式，见test里面的样例
