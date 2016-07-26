@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author çŽ‹å¿—äº® [qieqie.wang@gmail.com]
  */
 public class SpringDataSourceFactory implements DataSourceFactory, ApplicationContextAware {
 

@@ -28,9 +28,9 @@ import net.paoding.rose.jade.statement.StatementWrapperProvider;
 import net.paoding.rose.jade.statement.UpdateQuerier;
 
 /**
- * DAO´úÀí´¦ÀíÆ÷£¨Ò»¸öDAOÀà¶ÔÓ¦Ò»¸ö´¦ÀíÆ÷ÊµÀı£©
+ * DAOä»£ç†å¤„ç†å™¨ï¼ˆä¸€ä¸ªDAOç±»å¯¹åº”ä¸€ä¸ªå¤„ç†å™¨å®ä¾‹ï¼‰
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  * 
  */
 public class JadeInvocationHandler implements InvocationHandler {
@@ -69,14 +69,14 @@ public class JadeInvocationHandler implements InvocationHandler {
             logger.debug("invoking " + daoMetaData.getDAOClass().getName() + "#" + method.getName());
         }
 
-        // µ÷ÓÃobjectµÄ·½·¨
+        // è°ƒç”¨objectçš„æ–¹æ³•
         if (method.getDeclaringClass() == Object.class) {
             return invokeObjectMethod(proxy, method, args);
         }
-        // »ñÈ¡µ±Ç°DAO·½·¨¶ÔÓ¦µÄStatement¶ÔÏó
+        // è·å–å½“å‰DAOæ–¹æ³•å¯¹åº”çš„Statementå¯¹è±¡
         Statement statement = getStatement(method);
         //
-        // ½«²ÎÊı·ÅÈë  Map
+        // å°†å‚æ•°æ”¾å…¥  Map
         Map<String, Object> parameters;
         StatementMetaData statemenetMetaData = statement.getMetaData();
         if (args == null || args.length == 0) {

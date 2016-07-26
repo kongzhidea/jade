@@ -13,38 +13,38 @@ import net.paoding.rose.jade.annotation.SQLType;
 import net.paoding.rose.jade.annotation.ShardBy;
 
 /**
- * {@link StatementMetaData} ·â×°¡¢»º´æÁËÒ»¸öDAO·½·¨µÄÏà¹ØĞÅÏ¢
+ * {@link StatementMetaData} å°è£…ã€ç¼“å­˜äº†ä¸€ä¸ªDAOæ–¹æ³•çš„ç›¸å…³ä¿¡æ¯
  * <p>
  * 
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 @SuppressWarnings({ "rawtypes" })
 public class StatementMetaData {
 
     /**
-     * ËùÊôµÄDAOÀàµÄclassMetaData
+     * æ‰€å±çš„DAOç±»çš„classMetaData
      */
     private final DAOMetaData daoMetaData;
 
     /**
-     * ËùÔÚµÄDAO·½·¨
+     * æ‰€åœ¨çš„DAOæ–¹æ³•
      */
     private final Method method;
 
     /**
-     * DAO·½·¨ÉÏµÄÔ­Ê¼SQLÓï¾ä£¬Èç¹ûÃ»ÓĞÖ´ĞĞSQLÓï¾ä£¬Ôò¸ù¾İ·½·¨Ç©ÃûÉú³ÉÏàÓ¦µÄ´®¸¨Öúdebug
+     * DAOæ–¹æ³•ä¸Šçš„åŸå§‹SQLè¯­å¥ï¼Œå¦‚æœæ²¡æœ‰æ‰§è¡ŒSQLè¯­å¥ï¼Œåˆ™æ ¹æ®æ–¹æ³•ç­¾åç”Ÿæˆç›¸åº”çš„ä¸²è¾…åŠ©debug
      */
     private final String sql;
 
     /**
-     * SQLÀàĞÍ£¨²éÑ¯ÀàĞÍ»òÕß¸üĞÂÀàĞÍ£©£ºÄ¬ÈÏÓÉ·½·¨ÃûºÍSQLÓï¾äÅĞ¶Ï£¬³ı·ÇÇ¿ÖÆÖ¸¶¨¡£
+     * SQLç±»å‹ï¼ˆæŸ¥è¯¢ç±»å‹æˆ–è€…æ›´æ–°ç±»å‹ï¼‰ï¼šé»˜è®¤ç”±æ–¹æ³•åå’ŒSQLè¯­å¥åˆ¤æ–­ï¼Œé™¤éå¼ºåˆ¶æŒ‡å®šã€‚
      * @see SQLType
      */
     private final SQLType sqlType;
 
     /**
-     * DAO·½·¨ÉÏµÄReturnGeneratedKeys×¢½â
+     * DAOæ–¹æ³•ä¸Šçš„ReturnGeneratedKeysæ³¨è§£
      */
     private DynamicReturnGeneratedKeys returnGeneratedKeys;
 
@@ -54,15 +54,15 @@ public class StatementMetaData {
     private AfterInvocationCallback afterInvocationCallback;
 
     /**
-     * DAO·½·¨µÄ¡°×îµÍ·µ»ØÀàĞÍ¡±¡£
+     * DAOæ–¹æ³•çš„â€œæœ€ä½è¿”å›ç±»å‹â€ã€‚
      * <P>
-     * ´ó²¿·ÖÇé¿öreturnTypeºÍmethod.getReturnTypeÊÇÏàÍ¬µÄ£¬µ«¶ÔÓÚÒ»Ğ©ÉùÃ÷Îª·ºĞÍµÄ·µ»ØÀàĞÍ£¬
-     * Jade»á¾¡Á¿ÌáÈ¡³öÊµ¼ÊµÄÀàĞÍ×÷ÎªreturnType
+     * å¤§éƒ¨åˆ†æƒ…å†µreturnTypeå’Œmethod.getReturnTypeæ˜¯ç›¸åŒçš„ï¼Œä½†å¯¹äºä¸€äº›å£°æ˜ä¸ºæ³›å‹çš„è¿”å›ç±»å‹ï¼Œ
+     * Jadeä¼šå°½é‡æå–å‡ºå®é™…çš„ç±»å‹ä½œä¸ºreturnType
      * <P>
-     * ±ÈÈç£º
+     * æ¯”å¦‚ï¼š
      * 
      * <pre>
-     * //@DAO¡¢@SQL×¢½â´ÓÂÔ
+     * //@DAOã€@SQLæ³¨è§£ä»ç•¥
      * public interface BaseDAO&lt;E&gt; {
      * 
      *     public E getById(Long id);
@@ -73,29 +73,29 @@ public class StatementMetaData {
      * }
      * </pre>
      * 
-     * ´ËÊ±£¬UserDAO#getById·½·¨µÄreturnTypeÊÇUser£¬¶ø·ÇObject;
+     * æ­¤æ—¶ï¼ŒUserDAO#getByIdæ–¹æ³•çš„returnTypeæ˜¯Userï¼Œè€ŒéObject;
      */
     private final Class returnType;
 
     /**
-     * ·½·¨·µ»Ø²ÎÊıµÄ·¶ĞÍÀàĞÍ£¨²»Ö§³Ö¶à¼¶£©£­´ÓmethodÖĞ»ñÈ¡²¢»º´æ
+     * æ–¹æ³•è¿”å›å‚æ•°çš„èŒƒå‹ç±»å‹ï¼ˆä¸æ”¯æŒå¤šçº§ï¼‰ï¼ä»methodä¸­è·å–å¹¶ç¼“å­˜
      * 
      * <pre>
-     * Ê¾Àı£º
-     * £¨1£© List<E>ÖĞµÄE
-     * £¨2£© Map<K, V>ÖĞµÄK¡¢V
+     * ç¤ºä¾‹ï¼š
+     * ï¼ˆ1ï¼‰ List<E>ä¸­çš„E
+     * ï¼ˆ2ï¼‰ Map<K, V>ä¸­çš„Kã€V
      */
     private final Class[] parameterTypesOfReturnType;
 
     /**
-     * {@link SQLParam} ×¢½âÊı×é£­´ÓmethodÖĞ»ñÈ¡²¢»º´æ
+     * {@link SQLParam} æ³¨è§£æ•°ç»„ï¼ä»methodä¸­è·å–å¹¶ç¼“å­˜
      * <p>
-     * ´ËÊı×éµÄ³¤¶ÈÎª·½·¨µÄ²ÎÊı¸öÊı£¬Èç¹û¶ÔÓ¦Î»ÖÃµÄ·½·¨²ÎÊıÃ»ÓĞ×¢½â {@link SQLParam},¸ÃÎ»ÖÃµÄÔªËØÖµÎªnull
+     * æ­¤æ•°ç»„çš„é•¿åº¦ä¸ºæ–¹æ³•çš„å‚æ•°ä¸ªæ•°ï¼Œå¦‚æœå¯¹åº”ä½ç½®çš„æ–¹æ³•å‚æ•°æ²¡æœ‰æ³¨è§£ {@link SQLParam},è¯¥ä½ç½®çš„å…ƒç´ å€¼ä¸ºnull
      */
     private final SQLParam[] sqlParams;
 
     /**
-     * <code>@{@link ShardBy}</code>±ê×¢ÔÚÄÄ¸ö²ÎÊıÉÏ£¿(´Ó0¿ªÊ¼£¬¸ºÊı´ú±íÎŞ)£­´ÓmethodÖĞ»ñÈ¡²¢»º´æ
+     * <code>@{@link ShardBy}</code>æ ‡æ³¨åœ¨å“ªä¸ªå‚æ•°ä¸Šï¼Ÿ(ä»0å¼€å§‹ï¼Œè´Ÿæ•°ä»£è¡¨æ— )ï¼ä»methodä¸­è·å–å¹¶ç¼“å­˜
      */
     private final int shardByIndex;
 
@@ -104,7 +104,7 @@ public class StatementMetaData {
     private final int parameterCount;
 
     /**
-     * ¿ò¼Ü»ò²å¼şÉèÖÃµÄÊôĞÔ
+     * æ¡†æ¶æˆ–æ’ä»¶è®¾ç½®çš„å±æ€§
      */
     private Map<String, Object> attributes;
 
@@ -253,7 +253,7 @@ public class StatementMetaData {
     }
 
     /**
-     * ÉèÖÃ¹ÒÔÚDAO·½·¨ÉÏµÄÊôĞÔ
+     * è®¾ç½®æŒ‚åœ¨DAOæ–¹æ³•ä¸Šçš„å±æ€§
      * 
      * @param name
      * @param value
@@ -272,7 +272,7 @@ public class StatementMetaData {
     /**
      * 
      * @param name
-     * @return »ñÈ¡ÓÉ {@link #setAttribute(String, Object)} µÄÊôĞÔ
+     * @return è·å–ç”± {@link #setAttribute(String, Object)} çš„å±æ€§
      */
     @SuppressWarnings("unchecked")
     public <T> T getAttribute(String name) {
@@ -283,7 +283,7 @@ public class StatementMetaData {
         SQLType sqlType = sql.type();
         if (sqlType == SQLType.AUTO_DETECT) {
             for (int i = 0; i < SELECT_PATTERNS.length; i++) {
-                // ÓÃÕıÔò±í´ïÊ½Æ¥Åä SELECT Óï¾ä
+                // ç”¨æ­£åˆ™è¡¨è¾¾å¼åŒ¹é… SELECT è¯­å¥
                 if (SELECT_PATTERNS[i].matcher(getSQL()).find() //
                     || SELECT_PATTERNS[i].matcher(getMethod().getName()).find()) {
                     sqlType = SQLType.READ;

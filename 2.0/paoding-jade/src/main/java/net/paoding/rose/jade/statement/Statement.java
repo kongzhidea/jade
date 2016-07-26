@@ -3,28 +3,28 @@ package net.paoding.rose.jade.statement;
 import java.util.Map;
 
 /**
- * {@link Statement} ±íÊ¾Ò»¸ö·ûºÏ¹æ·¶µÄDAO·½·¨£¬´ú±íÒ»¸ö¶ÔÊı¾İ¿â½øĞĞ¼ìË÷»ò¸üĞÂµÄÓï¾ä¡£
+ * {@link Statement} è¡¨ç¤ºä¸€ä¸ªç¬¦åˆè§„èŒƒçš„DAOæ–¹æ³•ï¼Œä»£è¡¨ä¸€ä¸ªå¯¹æ•°æ®åº“è¿›è¡Œæ£€ç´¢æˆ–æ›´æ–°çš„è¯­å¥ã€‚
  * <p>
  * 
- * ÕâÊÇÒ»¸öÄÚ²¿½Ó¿Ú
+ * è¿™æ˜¯ä¸€ä¸ªå†…éƒ¨æ¥å£
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 public interface Statement {
 
     /**
-     * ËùÊôµÄDAO·½·¨¼°ÆäÏà¹ØµÄĞÅÏ¢
+     * æ‰€å±çš„DAOæ–¹æ³•åŠå…¶ç›¸å…³çš„ä¿¡æ¯
      * 
      * @return
      */
     public StatementMetaData getMetaData();
 
     /**
-     * °´ÕÕ¸ø¶¨µÄ·½·¨²ÎÊıÖµ£¬Ö´ĞĞÒ»´ÎÊı¾İ¿â¼ìË÷»ò¸üĞÂ
+     * æŒ‰ç…§ç»™å®šçš„æ–¹æ³•å‚æ•°å€¼ï¼Œæ‰§è¡Œä¸€æ¬¡æ•°æ®åº“æ£€ç´¢æˆ–æ›´æ–°
      * <p>
-     * Äú¿ÉÒÔÍ¨¹ıparameters.get(":1")¡¢parameters.get(":2")»ñµÃ·½·¨ÖĞµÄµÚ1¡¢µÚ2¸ö²ÎÊı(´Ó1¿ªÊ¼)<br>
-     * Èç¹ûDAO·½·¨ÖĞµÄ²ÎÊıÉèÖÃÁË<code>@SQLParam(name)</code>
-     * ×¢½â£¬Äú»¹¿ÉÒÔ´Óparameters.get(name)È¡µÃ¸Ã²ÎÊı¡£
+     * æ‚¨å¯ä»¥é€šè¿‡parameters.get(":1")ã€parameters.get(":2")è·å¾—æ–¹æ³•ä¸­çš„ç¬¬1ã€ç¬¬2ä¸ªå‚æ•°(ä»1å¼€å§‹)<br>
+     * å¦‚æœDAOæ–¹æ³•ä¸­çš„å‚æ•°è®¾ç½®äº†<code>@SQLParam(name)</code>
+     * æ³¨è§£ï¼Œæ‚¨è¿˜å¯ä»¥ä»parameters.get(name)å–å¾—è¯¥å‚æ•°ã€‚
      * 
      * @return
      */

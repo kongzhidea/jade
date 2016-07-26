@@ -6,56 +6,56 @@ import net.paoding.rose.jade.annotation.SQLParam;
 import net.paoding.rose.jade.dataaccess.DataSourceFactory;
 
 /**
- * ·â×°Ò»´ÎDAOµ÷ÓÃĞÅÏ¢
+ * å°è£…ä¸€æ¬¡DAOè°ƒç”¨ä¿¡æ¯
  *
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 public interface StatementRuntime {
 
     /**
-     * @return ·µ»ØËùÒªÖ´ĞĞµÄDAO·½·¨ĞÅÏ¢
+     * @return è¿”å›æ‰€è¦æ‰§è¡Œçš„DAOæ–¹æ³•ä¿¡æ¯
      */
     StatementMetaData getMetaData();
 
     /**
-     * @return ·µ»Øµ÷ÓÃDAO·½·¨´«ÈëµÄ²ÎÊı£¬keyÎª":1"¡¢":2"£¬ÒÔ¼° {@link SQLParam} ×¢½âÖ¸¶¨µÄÃû³Æ(²»º¬Ã°ºÅ)
+     * @return è¿”å›è°ƒç”¨DAOæ–¹æ³•ä¼ å…¥çš„å‚æ•°ï¼Œkeyä¸º":1"ã€":2"ï¼Œä»¥åŠ {@link SQLParam} æ³¨è§£æŒ‡å®šçš„åç§°(ä¸å«å†’å·)
      */
     Map<String, Object> getParameters();
 
     /**
-     * @return ·µ»Ø´ËÊ±ÒªÖ´ĞĞµÄSQL£¬×î³õÖµÎª±ê×¢ÔÚDAO·½·¨ÉÏµÄ@SQLÄÚÈİ£¬µ« {@link Interpreter}ÃÇ»áÍ¨¹ı{@link #setSQL(String)} ¿ÉÒÔ¸Ä±äËü£¬
-     * ×îÖÕĞÎ³É·ûºÏÊı¾İ¿âÓï·¨ÒªÇóµÄÕæÕıSQLÓï¾ä
+     * @return è¿”å›æ­¤æ—¶è¦æ‰§è¡Œçš„SQLï¼Œæœ€åˆå€¼ä¸ºæ ‡æ³¨åœ¨DAOæ–¹æ³•ä¸Šçš„@SQLå†…å®¹ï¼Œä½† {@link Interpreter}ä»¬ä¼šé€šè¿‡{@link #setSQL(String)} å¯ä»¥æ”¹å˜å®ƒï¼Œ
+     * æœ€ç»ˆå½¢æˆç¬¦åˆæ•°æ®åº“è¯­æ³•è¦æ±‚çš„çœŸæ­£SQLè¯­å¥
      */
     String getSQL();
 
     /**
-     * ½«×î³õµÄSQLÓï¾ä±äÎªĞÂ´«ÈëµÄSQLÓï¾ä
+     * å°†æœ€åˆçš„SQLè¯­å¥å˜ä¸ºæ–°ä¼ å…¥çš„SQLè¯­å¥
      *
      * @param sql
      */
     void setSQL(String sql);
 
     /**
-     * @return µ±SQL×îÖÕ×ªÎªº¬ÓĞÎÊºÅ?µÄÊ±ºò£¬·µ»ØSQLÓï¾äÖĞ¶ÔÓ¦µÄ²ÎÊıÖµ
+     * @return å½“SQLæœ€ç»ˆè½¬ä¸ºå«æœ‰é—®å·?çš„æ—¶å€™ï¼Œè¿”å›SQLè¯­å¥ä¸­å¯¹åº”çš„å‚æ•°å€¼
      */
     Object[] getArgs();
 
     /**
-     * µ±SQL×îÖÕ×ªÎªº¬ÓĞÎÊºÅ?µÄÊ±ºò£¬µ÷ÓÃ±¾·½·¨½«SQLÓï¾äÖĞ¶ÔÓ¦µÄ²ÎÊı°´Ë³Ğò´«Èë½øÀ´
+     * å½“SQLæœ€ç»ˆè½¬ä¸ºå«æœ‰é—®å·?çš„æ—¶å€™ï¼Œè°ƒç”¨æœ¬æ–¹æ³•å°†SQLè¯­å¥ä¸­å¯¹åº”çš„å‚æ•°æŒ‰é¡ºåºä¼ å…¥è¿›æ¥
      *
      * @param args
      */
     void setArgs(Object[] args);
 
     /**
-     * ·µ»Ø{@link Interpreter}ÔÚ½âÎöSQLÓï¾äÊ±ºò£¬¿ÉÒÔ¸øruntimeÉèÖÃµÄÒ»Ğ©ÊôĞÔ£¬¸¨Öú {@link DataSourceFactory} ÓÃÓÚ¾ö²ß
+     * è¿”å›{@link Interpreter}åœ¨è§£æSQLè¯­å¥æ—¶å€™ï¼Œå¯ä»¥ç»™runtimeè®¾ç½®çš„ä¸€äº›å±æ€§ï¼Œè¾…åŠ© {@link DataSourceFactory} ç”¨äºå†³ç­–
      *
-     * @return ·Ç¿Õ
+     * @return éç©º
      */
     Map<String, Object> getAttributes();
 
     /**
-     * {@link Interpreter}ÔÚ½âÎöSQLÓï¾äÊ±ºò£¬¿ÉÒÔ¸øruntimeÉèÖÃµÄÒ»Ğ©ÊôĞÔ£¬¸¨Öú {@link DataSourceFactory} ÓÃÓÚ¾ö²ß
+     * {@link Interpreter}åœ¨è§£æSQLè¯­å¥æ—¶å€™ï¼Œå¯ä»¥ç»™runtimeè®¾ç½®çš„ä¸€äº›å±æ€§ï¼Œè¾…åŠ© {@link DataSourceFactory} ç”¨äºå†³ç­–
      *
      * @param name
      * @param value
@@ -63,7 +63,7 @@ public interface StatementRuntime {
     void setAttribute(String name, Object value);
 
     /**
-     * ·µ»Ø{@link Interpreter}ÔÚ½âÎöSQLÓï¾äÊ±ºò£¬¿ÉÒÔ¸øruntimeÉèÖÃµÄÒ»Ğ©ÊôĞÔ£¬¸¨Öú {@link DataSourceFactory} ÓÃÓÚ¾ö²ß
+     * è¿”å›{@link Interpreter}åœ¨è§£æSQLè¯­å¥æ—¶å€™ï¼Œå¯ä»¥ç»™runtimeè®¾ç½®çš„ä¸€äº›å±æ€§ï¼Œè¾…åŠ© {@link DataSourceFactory} ç”¨äºå†³ç­–
      *
      * @param name
      * @return

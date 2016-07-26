@@ -26,13 +26,13 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
     private ApplicationContext applicationContext;
 
 
-    // DataAccessFactoryAdapter£¬ ĞèÒª´«DataSourceFactory£¬¿ÉÒÔÑ¡ SimpleDataSourceFactory »òÕß SpringDataSourceFactory
+    // DataAccessFactoryAdapterï¼Œ éœ€è¦ä¼ DataSourceFactoryï¼Œå¯ä»¥é€‰ SimpleDataSourceFactory æˆ–è€… SpringDataSourceFactory
     protected DataAccessFactory dataAccessFactory;
 
     // DefaultRowMapperFactory
     protected RowMapperFactory rowMapperFactory;
 
-    // SpringInterpreterFactory£¬»á×Ô¶¯´øÉÏDefaultInterpreterFactory£¬»¹¿ÉÒÔÅäÖÃ×Ô¼ºµÄ interpreter
+    // SpringInterpreterFactoryï¼Œä¼šè‡ªåŠ¨å¸¦ä¸ŠDefaultInterpreterFactoryï¼Œè¿˜å¯ä»¥é…ç½®è‡ªå·±çš„ interpreter
     protected InterpreterFactory interpreterFactory;
 
 

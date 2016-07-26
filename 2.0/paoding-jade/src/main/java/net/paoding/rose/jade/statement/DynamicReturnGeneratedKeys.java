@@ -11,17 +11,17 @@ import net.paoding.rose.jade.annotation.ReturnGeneratedKeys;
 public abstract class DynamicReturnGeneratedKeys {
 
     /**
-     * ÊÇ·ñÒªÆô¶¯ return generated keys»úÖÆ
+     * æ˜¯å¦è¦å¯åŠ¨ return generated keysæœºåˆ¶
      *
      * @param runtime
      */
     public abstract boolean shouldReturnGerneratedKeys(StatementRuntime runtime);
 
     /**
-     * ¼ì²éDAO·µ»ØµÄÀàĞÍÊÇ·ñºÏ¸ñ
+     * æ£€æŸ¥DAOè¿”å›çš„ç±»å‹æ˜¯å¦åˆæ ¼
      *
-     * @param returnType DAO·½·¨µÄ·µ»ØÀàĞÍ£¨Èç¹û·½·¨ÉùÃ÷µÄ·µ»ØÀàĞÍÊÇ·ºĞÍ£¬¿ò¼Ü»á¸ù¾İÉÏÏÂÎÄĞÅÏ¢½âÎöÎªÔËĞĞÊ±Êµ¼ÊÓ¦¸Ã·µ»ØµÄÕæÕıÀàĞÍ)
-     * @throws InvalidDataAccessApiUsageException DAO·½·¨µÄ·µ»ØÀàĞÍ²»ºÏ¸ñ
+     * @param returnType DAOæ–¹æ³•çš„è¿”å›ç±»å‹ï¼ˆå¦‚æœæ–¹æ³•å£°æ˜çš„è¿”å›ç±»å‹æ˜¯æ³›å‹ï¼Œæ¡†æ¶ä¼šæ ¹æ®ä¸Šä¸‹æ–‡ä¿¡æ¯è§£æä¸ºè¿è¡Œæ—¶å®é™…åº”è¯¥è¿”å›çš„çœŸæ­£ç±»å‹)
+     * @throws InvalidDataAccessApiUsageException DAOæ–¹æ³•çš„è¿”å›ç±»å‹ä¸åˆæ ¼
      */
     public void checkMethodReturnType(Class<?> returnType, StatementMetaData metaData) {
         returnType = ClassUtils.primitiveToWrapper(returnType);

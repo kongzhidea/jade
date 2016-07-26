@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ¶ÔÓÚsqlÖĞÃ»ÓĞº¬ÓĞÉ¢±í²ÎÊıµÄ»òÉ¢±í²ÎÊıÃû³ÆºÍÅäÖÃµÄÉ¢±íÃû³Æ²»Ò»ÖÂµÄ£¬Í¨¹ı½« ShardBy ÅäÖÃÔÚÕâ¸ö²ÎÊıÉÏ£¬±íÊ¾Ê¹ÓÃ¸Ã²ÎÊı½øĞĞÉ¢±í.
+ * å¯¹äºsqlä¸­æ²¡æœ‰å«æœ‰æ•£è¡¨å‚æ•°çš„æˆ–æ•£è¡¨å‚æ•°åç§°å’Œé…ç½®çš„æ•£è¡¨åç§°ä¸ä¸€è‡´çš„ï¼Œé€šè¿‡å°† ShardBy é…ç½®åœ¨è¿™ä¸ªå‚æ•°ä¸Šï¼Œè¡¨ç¤ºä½¿ç”¨è¯¥å‚æ•°è¿›è¡Œæ•£è¡¨.
  * <p>
  * &#64;SQL(&quot;....where name like :1&quot;)<br>
  * public List<Xxx> find(String likeValue, &#64;ShardBy String pageId);
@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * <pre>
  * </pre>
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 @Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 public @interface ShardBy {
 
     /**
-     * bean²ÎÊıÇé¿öÏÂµÄÊôĞÔÃû
+     * beanå‚æ•°æƒ…å†µä¸‹çš„å±æ€§å
      * 
      * @return
      */

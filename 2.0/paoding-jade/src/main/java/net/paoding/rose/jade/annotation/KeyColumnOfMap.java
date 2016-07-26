@@ -7,13 +7,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * JadeÖ§³ÖDAO·½·¨·µ»ØMapĞÎÊ½µÄ£¬Ä¬ÈÏÇé¿öÏÂJadeÑ¡È¡µÚÒ»ÁĞ×÷ÎªMapµÄkey¡£
+ * Jadeæ”¯æŒDAOæ–¹æ³•è¿”å›Mapå½¢å¼çš„ï¼Œé»˜è®¤æƒ…å†µä¸‹Jadeé€‰å–ç¬¬ä¸€åˆ—ä½œä¸ºMapçš„keyã€‚
  * <p>
- * ÎÒÃÇÍÆ¼öÄúÔÚĞ´·µ»ØmapµÄSQLÊ±£¬°Ñkey·Åµ½µÚÒ»ÁĞ£¬µ«ÊÇÈç¹ûÕæ²»ÏëÕâÑù×ö£¬Äã¿ÉÒÔÍ¨¹ı±¾×¢½â£¬¼´{@link KeyColumnOfMap}
- * ½øĞĞÖ¸¶¨¡£
+ * æˆ‘ä»¬æ¨èæ‚¨åœ¨å†™è¿”å›mapçš„SQLæ—¶ï¼ŒæŠŠkeyæ”¾åˆ°ç¬¬ä¸€åˆ—ï¼Œä½†æ˜¯å¦‚æœçœŸä¸æƒ³è¿™æ ·åšï¼Œä½ å¯ä»¥é€šè¿‡æœ¬æ³¨è§£ï¼Œå³{@link KeyColumnOfMap}
+ * è¿›è¡ŒæŒ‡å®šã€‚
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 @Target( { ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 public @interface KeyColumnOfMap {
 
     /**
-     * Ö¸³öÒª±»µ±³Émap keyµÄ×Ö¶ÎÃû³Æ
+     * æŒ‡å‡ºè¦è¢«å½“æˆmap keyçš„å­—æ®µåç§°
      * 
      * @return
      */

@@ -4,9 +4,9 @@ import net.paoding.rose.jade.dataaccess.DataAccessFactory;
 import net.paoding.rose.jade.rowmapper.RowMapperFactory;
 
 /**
- * Ö§³ÖDAOÀàµÄ»ù´¡ÅäÖÃ£¨Êı¾İÔ´ÅäÖÃ¡¢SQL½âÎöÆ÷ÅäÖÃ¡¢ORÓ³ÉäÅäÖÃµÈµÈ£©
+ * æ”¯æŒDAOç±»çš„åŸºç¡€é…ç½®ï¼ˆæ•°æ®æºé…ç½®ã€SQLè§£æå™¨é…ç½®ã€ORæ˜ å°„é…ç½®ç­‰ç­‰ï¼‰
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  * 
  */
 public class DAOConfig {
@@ -30,7 +30,7 @@ public class DAOConfig {
     }
 
     /**
-     * ±ê×¼Êı¾İ·ÃÎÊÆ÷ÅäÖÃ
+     * æ ‡å‡†æ•°æ®è®¿é—®å™¨é…ç½®
      * 
      * @return
      */
@@ -39,7 +39,7 @@ public class DAOConfig {
     }
 
     /**
-     * SQL½âÎöÆ÷ÅäÖÃ
+     * SQLè§£æå™¨é…ç½®
      * 
      * @return
      */
@@ -48,7 +48,7 @@ public class DAOConfig {
     }
 
     /**
-     * ORÓ³ÉäÅäÖÃ
+     * ORæ˜ å°„é…ç½®
      * 
      * @return
      */

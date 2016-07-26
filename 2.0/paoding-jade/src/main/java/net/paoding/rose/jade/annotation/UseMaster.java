@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Ê¹ÓÃ£º{#link UseMaster} ±ê×¢ĞèÒªÇ¿ÖÆ²éÑ¯ master Êı¾İ¿âµÄ DAO ½Ó¿Ú·½·¨¡£
+ * ä½¿ç”¨ï¼š{#link UseMaster} æ ‡æ³¨éœ€è¦å¼ºåˆ¶æŸ¥è¯¢ master æ•°æ®åº“çš„ DAO æ¥å£æ–¹æ³•ã€‚
  * 
  * @author han.liao
  */
@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
 public @interface UseMaster {
 
     /**
-     * ÊÇ·ñĞèÒªÇ¿ÖÆ²éÑ¯ master Êı¾İ¿â¡£
+     * æ˜¯å¦éœ€è¦å¼ºåˆ¶æŸ¥è¯¢ master æ•°æ®åº“ã€‚
      * 
-     * @return Ç¿ÖÆ²éÑ¯ master Êı¾İ¿â
+     * @return å¼ºåˆ¶æŸ¥è¯¢ master æ•°æ®åº“
      */
     boolean value() default true;
 }

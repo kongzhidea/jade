@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * {@link DAOMetaData} ·â×°»º´æÒ»¸öDAO½Ó¿ÚÀà±¾ÉíµÄÒ»Ğ©ĞÅÏ¢£¬±ÈÈçÀà¶ÔÏó¡¢Àà³£Á¿µÈµÈ
+ * {@link DAOMetaData} å°è£…ç¼“å­˜ä¸€ä¸ªDAOæ¥å£ç±»æœ¬èº«çš„ä¸€äº›ä¿¡æ¯ï¼Œæ¯”å¦‚ç±»å¯¹è±¡ã€ç±»å¸¸é‡ç­‰ç­‰
  *
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 public class DAOMetaData {
 
@@ -18,17 +18,17 @@ public class DAOMetaData {
     private final DAOConfig config;
 
     /**
-     * DAO½ÓÀà
+     * DAOæ¥ç±»
      */
     private final Class<?> daoClass;
 
     /**
-     * ¶¨ÒåÔÚDAO½Ó¿ÚÉÏµÄ³£Á¿£¨°üº¬¸¸½Ó¿ÚµÄ£©
+     * å®šä¹‰åœ¨DAOæ¥å£ä¸Šçš„å¸¸é‡ï¼ˆåŒ…å«çˆ¶æ¥å£çš„ï¼‰
      */
     private final Map<String, Object> constants;
 
     /**
-     * DAOÀàÉÏµÄÊôĞÔ
+     * DAOç±»ä¸Šçš„å±æ€§
      */
     private final Map<String, Object> attributes;
 
@@ -44,7 +44,7 @@ public class DAOMetaData {
     }
 
     /**
-     * Ö§³Ö±¾DAOÀàµÄ»ù´¡ÅäÖÃ£¨Êı¾İÔ´ÅäÖÃ¡¢½âÎöÆ÷ÅäÖÃ¡¢ORÓ³ÉäÅäÖÃµÈµÈ£©
+     * æ”¯æŒæœ¬DAOç±»çš„åŸºç¡€é…ç½®ï¼ˆæ•°æ®æºé…ç½®ã€è§£æå™¨é…ç½®ã€ORæ˜ å°„é…ç½®ç­‰ç­‰ï¼‰
      *
      * @return
      */
@@ -57,10 +57,10 @@ public class DAOMetaData {
     }
 
     /**
-     * ·ºĞÍÀàĞÍ±äÁ¿ÔÚ±¾DAOÀàÖĞÕæÕıµÄÀàĞÍ
+     * æ³›å‹ç±»å‹å˜é‡åœ¨æœ¬DAOç±»ä¸­çœŸæ­£çš„ç±»å‹
      *
-     * @param declaringClass ÉùÃ÷ÀàĞÍ±äÁ¿typeVarNameµÄÀà
-     * @param typeVarName    ·ºĞÍ±äÁ¿Ãû
+     * @param declaringClass å£°æ˜ç±»å‹å˜é‡typeVarNameçš„ç±»
+     * @param typeVarName    æ³›å‹å˜é‡å
      * @return
      */
     @SuppressWarnings("rawtypes")
@@ -77,7 +77,7 @@ public class DAOMetaData {
     }
 
     /**
-     * ÉèÖÃ¹ÒÔÚDAOÉÏµÄÊôĞÔ
+     * è®¾ç½®æŒ‚åœ¨DAOä¸Šçš„å±æ€§
      *
      * @param name
      * @param value
@@ -88,7 +88,7 @@ public class DAOMetaData {
 
     /**
      * @param name
-     * @return »ñÈ¡ÓÉ {@link #setAttribute(String, Object)} µÄÊôĞÔ
+     * @return è·å–ç”± {@link #setAttribute(String, Object)} çš„å±æ€§
      */
     public Object getAttribute(String name) {
         return attributes.get(name);

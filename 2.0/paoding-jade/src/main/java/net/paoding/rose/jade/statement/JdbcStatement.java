@@ -21,7 +21,7 @@ import net.paoding.rose.jade.annotation.SQLType;
 
 /**
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  * 
  */
 public class JdbcStatement implements Statement {
@@ -79,7 +79,7 @@ public class JdbcStatement implements Statement {
             if (types.length > 0 && List.class.isAssignableFrom(types[0])) {
                 this.batchUpdate = true;
                 if (metaData.getMethod().getAnnotation(ReturnGeneratedKeys.class) != null) {
-                    // ÅúÁ¿´¦ÀíµÄÖ±½Ó²»Ö§³Ö@ReturnGeneratedKeys×¢½â
+                    // æ‰¹é‡å¤„ç†çš„ç›´æ¥ä¸æ”¯æŒ@ReturnGeneratedKeysæ³¨è§£
                     throw new InvalidDataAccessApiUsageException(
                         "batch update method cannot return generated keys: " + method);
                 }
@@ -123,7 +123,7 @@ public class JdbcStatement implements Statement {
             while (iterator.hasNext()) {
                 Object arg = iterator.next();
                 HashMap<String, Object> clone = new HashMap<String, Object>(parameters);
-                // ¸üĞÂÖ´ĞĞ²ÎÊı
+                // æ›´æ–°æ‰§è¡Œå‚æ•°
                 clone.put(":1", arg);
                 if (metaData.getSQLParamAt(0) != null) {
                     clone.put(metaData.getSQLParamAt(0).value(), arg);

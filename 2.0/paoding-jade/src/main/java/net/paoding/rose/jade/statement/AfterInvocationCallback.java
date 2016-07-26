@@ -1,14 +1,14 @@
 package net.paoding.rose.jade.statement;
 
 /**
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 public interface AfterInvocationCallback {
 
     /**
-     * @param runtime     ÔËĞĞÊ±
-     * @param returnValue DAO·½·¨µÄ·µ»ØÖµ
-     * @return ¸Ä±äºóµÄ·µ»ØÖµ
+     * @param runtime     è¿è¡Œæ—¶
+     * @param returnValue DAOæ–¹æ³•çš„è¿”å›å€¼
+     * @return æ”¹å˜åçš„è¿”å›å€¼
      */
     public Object execute(StatementRuntime runtime, Object returnValue);
 }

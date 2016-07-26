@@ -3,17 +3,17 @@ package net.paoding.rose.jade.statement;
 import org.springframework.core.annotation.Order;
 
 /**
- * ¿ÉÓÃ {@link Order}À´µ÷½ÚÓÅÏÈ¼¶£¬¸ù¾İ {@link Order} ÓïÒå£¬ÖµÔ½Ğ¡Ô½ÓÅÏÈ£¬ÖµÔ½´óÔ½ºó£»
+ * å¯ç”¨ {@link Order}æ¥è°ƒèŠ‚ä¼˜å…ˆçº§ï¼Œæ ¹æ® {@link Order} è¯­ä¹‰ï¼Œå€¼è¶Šå°è¶Šä¼˜å…ˆï¼Œå€¼è¶Šå¤§è¶Šåï¼›
  * <p>
- * Èç¹ûÃ»ÓĞ±ê×¢ {@link Order} Ê¹ÓÃÄ¬ÈÏÖµ0¡£
+ * å¦‚æœæ²¡æœ‰æ ‡æ³¨ {@link Order} ä½¿ç”¨é»˜è®¤å€¼0ã€‚
  * 
- * ´ÓÊµ¼ù¿´£¬jade²å¼şµÄ½âÎöÆ÷Ò»°ãÓ¦¸ÃÉèÖÃÎª¸ºÊı£¬ÒÔÓÅÏÈÓÚÏµÍ³½âÎöÆ÷¡£
+ * ä»å®è·µçœ‹ï¼Œjadeæ’ä»¶çš„è§£æå™¨ä¸€èˆ¬åº”è¯¥è®¾ç½®ä¸ºè´Ÿæ•°ï¼Œä»¥ä¼˜å…ˆäºç³»ç»Ÿè§£æå™¨ã€‚
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  * 
  */
-//°´SpringÓïÒå¹æ¶¨£¬¸ù¾İ {@link Order} ÓïÒå£¬ÖµÔ½Ğ¡Ô½ÓÅÏÈ£¬ÖµÔ½´óÔ½ºó£»
+//æŒ‰Springè¯­ä¹‰è§„å®šï¼Œæ ¹æ® {@link Order} è¯­ä¹‰ï¼Œå€¼è¶Šå°è¶Šä¼˜å…ˆï¼Œå€¼è¶Šå¤§è¶Šåï¼›
 @Order(0)
 public interface Interpreter {
 

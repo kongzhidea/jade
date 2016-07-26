@@ -11,12 +11,12 @@ import net.paoding.rose.jade.statement.StatementRuntime;
 
 /**
  * 
- * ½« {@link ReturnGeneratedKeys} ÉùÃ÷ÔÚinsertÓï¾äµÄ·½·¨ÉÏ£¬±íÊ¾·µ»ØµÄÊÇ²åÈëµÄid¡£
+ * å°† {@link ReturnGeneratedKeys} å£°æ˜åœ¨insertè¯­å¥çš„æ–¹æ³•ä¸Šï¼Œè¡¨ç¤ºè¿”å›çš„æ˜¯æ’å…¥çš„idã€‚
  * 
  * <pre>
- * 1¡¢ÔÚ@SQLÉÏÉùÃ÷×¢½â @ReturnGeneratedKeys
- * 2¡¢·½·¨·µ»ØÖµ¸ÄÎªÓû·µ»ØµÄÊıÖµÀàĞÍ£¬±ÈÈçlong¡¢intµÈ
- * Àı×Ó£º
+ * 1ã€åœ¨@SQLä¸Šå£°æ˜æ³¨è§£ @ReturnGeneratedKeys
+ * 2ã€æ–¹æ³•è¿”å›å€¼æ”¹ä¸ºæ¬²è¿”å›çš„æ•°å€¼ç±»å‹ï¼Œæ¯”å¦‚longã€intç­‰
+ * ä¾‹å­ï¼š
  * 
  * &#064;ReturnGeneratedKeys
  * &#064;SQL(&quot;insert into role(id, name) values(myseq.nextal, :1)&quot;)
@@ -24,8 +24,8 @@ import net.paoding.rose.jade.statement.StatementRuntime;
  * </pre>
  * 
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)

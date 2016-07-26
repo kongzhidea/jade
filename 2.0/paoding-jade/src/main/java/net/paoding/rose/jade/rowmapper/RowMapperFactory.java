@@ -7,23 +7,23 @@ import net.paoding.rose.jade.statement.StatementMetaData;
 import org.springframework.jdbc.core.RowMapper;
 
 /**
- * {@link RowMapperFactory}¿ÉÒÔÎªÃ¿Ò»¸ö²éÑ¯ÀàĞÍDAO·½·¨´´½¨¶ÔÓ¦µÄĞĞÓ³ÉäÆ÷{@link RowMapper}
- * ¶ÔÏó£¬ÓÃÀ´°ÑSQL½á¹û¼¯ÖĞµÄÃ¿Ò»ĞĞ×ª»¯ÎªDAO·½·¨¶¨ÒåµÄ·µ»ØÀàĞÍËùÒªÇóµÄ×é¼şÀàĞÍ¡£
+ * {@link RowMapperFactory}å¯ä»¥ä¸ºæ¯ä¸€ä¸ªæŸ¥è¯¢ç±»å‹DAOæ–¹æ³•åˆ›å»ºå¯¹åº”çš„è¡Œæ˜ å°„å™¨{@link RowMapper}
+ * å¯¹è±¡ï¼Œç”¨æ¥æŠŠSQLç»“æœé›†ä¸­çš„æ¯ä¸€è¡Œè½¬åŒ–ä¸ºDAOæ–¹æ³•å®šä¹‰çš„è¿”å›ç±»å‹æ‰€è¦æ±‚çš„ç»„ä»¶ç±»å‹ã€‚
  * <p>
- * ¶ÔÓÚDAO·½·¨·µ»ØÀàĞÍÊÇList<User>»òUserµÄ£¬RowMapperÓÃÀ´½«½á¹û¼¯µÄÃ¿Ò»ĞĞ×ª»¯ÎªUser¶ÔÏó¡£<br>
- * Èç¹û·µ»ØÀàĞÍÊÇString[]»òStringµÄ£¬RowMapperÓÃÀ´½«½á¹û¼¯µÄÃ¿Ò»ĞĞ×ª»¯ÎªÒ»¸ö×Ö·û´®¶ÔÏó¡£<br>
- * ¡£¡£¡£
+ * å¯¹äºDAOæ–¹æ³•è¿”å›ç±»å‹æ˜¯List<User>æˆ–Userçš„ï¼ŒRowMapperç”¨æ¥å°†ç»“æœé›†çš„æ¯ä¸€è¡Œè½¬åŒ–ä¸ºUserå¯¹è±¡ã€‚<br>
+ * å¦‚æœè¿”å›ç±»å‹æ˜¯String[]æˆ–Stringçš„ï¼ŒRowMapperç”¨æ¥å°†ç»“æœé›†çš„æ¯ä¸€è¡Œè½¬åŒ–ä¸ºä¸€ä¸ªå­—ç¬¦ä¸²å¯¹è±¡ã€‚<br>
+ * ã€‚ã€‚ã€‚
  * <p>
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 public interface RowMapperFactory {
 
     /**
-     * ¸ù¾İDAO·½·¨µÄ·µ»ØÀàĞÍ¶¨Òå£¬½âÎö¿ÉÄÜ´æÔÚµÄ·ºĞÍ£¬´´½¨¶ÔÓ¦µÄĞĞÓ³ÉäÆ÷¶ÔÏó¡£
+     * æ ¹æ®DAOæ–¹æ³•çš„è¿”å›ç±»å‹å®šä¹‰ï¼Œè§£æå¯èƒ½å­˜åœ¨çš„æ³›å‹ï¼Œåˆ›å»ºå¯¹åº”çš„è¡Œæ˜ å°„å™¨å¯¹è±¡ã€‚
      * 
-     * @return Èç¹ûÎŞ·¨½âÎöÊ±¿É·µ»Ønull
+     * @return å¦‚æœæ— æ³•è§£ææ—¶å¯è¿”å›null
      */
     public RowMapper<?> getRowMapper(StatementMetaData metaData);
 }

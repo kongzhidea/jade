@@ -14,7 +14,7 @@ import net.paoding.rose.jade.rowmapper.RowMapperFactory;
 import net.paoding.rose.jade.statement.StatementMetaData;
 
 /**
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -22,24 +22,24 @@ import net.paoding.rose.jade.statement.StatementMetaData;
 public @interface RowHandler {
 
     /**
-     * Ö¸¶¨×Ô¼ºÉèÖÃµÄ rowMapper Àà£»rowMapperÀàÓ¦¸Ã×öµ½ÎŞ×´Ì¬¡£<p>
+     * æŒ‡å®šè‡ªå·±è®¾ç½®çš„ rowMapper ç±»ï¼›rowMapperç±»åº”è¯¥åšåˆ°æ— çŠ¶æ€ã€‚<p>
      */
     @SuppressWarnings("rawtypes") Class<? extends RowMapper> rowMapper() default NotSettingRowMapper.class;
 
     /**
-     * Í¨¹ı×Ô¶¨ÒåµÄ {@link RowMapperFactory} Ö¸¶¨×Ô¼ºÉèÖÃµÄ rowMapper Àà£»·µ»ØµÄrowMapperÀàÓ¦¸Ã×öµ½ÎŞ×´Ì¬¡£<p>
+     * é€šè¿‡è‡ªå®šä¹‰çš„ {@link RowMapperFactory} æŒ‡å®šè‡ªå·±è®¾ç½®çš„ rowMapper ç±»ï¼›è¿”å›çš„rowMapperç±»åº”è¯¥åšåˆ°æ— çŠ¶æ€ã€‚<p>
      */
     Class<? extends RowMapperFactory> rowMapperFactory() default NotSettingRowMapperFactory.class;
 
     /**
-     * ÕâÊÇÒ»¸ö¼ì²é¿ª¹Ø,Ä¬ÈÏÎªtrue£»
+     * è¿™æ˜¯ä¸€ä¸ªæ£€æŸ¥å¼€å…³,é»˜è®¤ä¸ºtrueï¼›
      * <p/>
-     * true´ú±íÈç¹û²»ÊÇËùÓĞÁĞ¶¼±»Ó³Éä¸øÒ»¸ö Bean µÄÊôĞÔ£¬Å×³öÒì³£¡£
+     * trueä»£è¡¨å¦‚æœä¸æ˜¯æ‰€æœ‰åˆ—éƒ½è¢«æ˜ å°„ç»™ä¸€ä¸ª Bean çš„å±æ€§ï¼ŒæŠ›å‡ºå¼‚å¸¸ã€‚
      */
     boolean checkColumns() default true;
 
     /**
-     * ÕâÊÇÒ»¸ö¼ì²é¿ª¹Ø£¬Ä¬ÈÏÎªfalse; true´ú±íÈç¹û²»ÊÇÃ¿Ò»¸öbean ÊôĞÔ¶¼ÉèÖÃÁËSQL²éÑ¯½á¹ûµÄÖµ£¬Å×³öÒì³£¡£
+     * è¿™æ˜¯ä¸€ä¸ªæ£€æŸ¥å¼€å…³ï¼Œé»˜è®¤ä¸ºfalse; trueä»£è¡¨å¦‚æœä¸æ˜¯æ¯ä¸€ä¸ªbean å±æ€§éƒ½è®¾ç½®äº†SQLæŸ¥è¯¢ç»“æœçš„å€¼ï¼ŒæŠ›å‡ºå¼‚å¸¸ã€‚
      */
     boolean checkProperties() default false;
 

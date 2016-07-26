@@ -26,25 +26,25 @@ import java.sql.Connection;
 
 /**
  * 
- * ÓÃ´Ë{@link DAO}×¢½â±ê×¢ÔÚÒ»¸ö·ûºÏJade±àĞ´¹æ·¶µÄDAO½Ó¿ÚÀàÉÏ£¬Ã÷È·±ê×¢ÕâÊÇJade DAO½Ó¿Ú¡£
+ * ç”¨æ­¤{@link DAO}æ³¨è§£æ ‡æ³¨åœ¨ä¸€ä¸ªç¬¦åˆJadeç¼–å†™è§„èŒƒçš„DAOæ¥å£ç±»ä¸Šï¼Œæ˜ç¡®æ ‡æ³¨è¿™æ˜¯Jade DAOæ¥å£ã€‚
  * 
  * <p>
- * Ò»¸öJade DAOĞèÒª·ûºÏÒÔÏÂ»ù±¾ÒªÇó£º
+ * ä¸€ä¸ªJade DAOéœ€è¦ç¬¦åˆä»¥ä¸‹åŸºæœ¬è¦æ±‚ï¼š
  * <ul>
- * <li>1¡¢ ÔÚdao package»ò×ÓpackageÏÂ£¬Èçcom.renren.myapp.dao£»</li>
- * <li>2¡¢ ÊÇÒ»¸öpublicµÄjava interface ÀàĞÍ£»</li>
- * <li>3¡¢ Ãû³Æ±ØĞëÒÔ´óĞ´DAO×ÖÄ¸½áÎ²£¬ÈçUserDAO£»</li>
- * <li>4¡¢ ±ØĞë±ê×¢@DAO ×¢½â£»</li>
- * <li>5¡¢ ²»ÊÇÆäËüÀàµÄÄÚ²¿½Ó¿Ú£»</li>
+ * <li>1ã€ åœ¨dao packageæˆ–å­packageä¸‹ï¼Œå¦‚com.renren.myapp.daoï¼›</li>
+ * <li>2ã€ æ˜¯ä¸€ä¸ªpublicçš„java interface ç±»å‹ï¼›</li>
+ * <li>3ã€ åç§°å¿…é¡»ä»¥å¤§å†™DAOå­—æ¯ç»“å°¾ï¼Œå¦‚UserDAOï¼›</li>
+ * <li>4ã€ å¿…é¡»æ ‡æ³¨@DAO æ³¨è§£ï¼›</li>
+ * <li>5ã€ ä¸æ˜¯å…¶å®ƒç±»çš„å†…éƒ¨æ¥å£ï¼›</li>
  * <p>
  * 
- * Èç¹ûDAO½Ó¿Ú±»´ò°ü³ÉÎªÒ»¸öjarµÄ£¬ÎªÁËÒª±»JadeÊ¶±ğ£¬±ØĞëÔÚÕâ¸öjarµÄ META-INFO/rose.properties
- * ÎÄ¼şÖĞ°üº¬Õâ¸öÊôĞÔ£ºrose=dao (rose=*Òà¿É)¡£
+ * å¦‚æœDAOæ¥å£è¢«æ‰“åŒ…æˆä¸ºä¸€ä¸ªjarçš„ï¼Œä¸ºäº†è¦è¢«Jadeè¯†åˆ«ï¼Œå¿…é¡»åœ¨è¿™ä¸ªjarçš„ META-INFO/rose.properties
+ * æ–‡ä»¶ä¸­åŒ…å«è¿™ä¸ªå±æ€§ï¼šrose=dao (rose=*äº¦å¯)ã€‚
  * 
  * 
  * @see http://code.google.com/p/paoding-rose/wiki/Jade_DAO_Spec
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
@@ -53,14 +53,14 @@ import java.sql.Connection;
 public @interface DAO {
 
     /**
-     * Ö¸¶¨ËùÊ¹ÓÃÊı¾İ¿âÁ¬½ÓµÄcatalogÊôĞÔ£¬ÉèÖÃÎª¿Õ(¿Õ´®)µÈ¼ÛÓÚÃ»ÓĞÉèÖÃ£¬±íÊ¾²»Ê¹ÓÃcatalogÊôĞÔ¡£
+     * æŒ‡å®šæ‰€ä½¿ç”¨æ•°æ®åº“è¿æ¥çš„catalogå±æ€§ï¼Œè®¾ç½®ä¸ºç©º(ç©ºä¸²)ç­‰ä»·äºæ²¡æœ‰è®¾ç½®ï¼Œè¡¨ç¤ºä¸ä½¿ç”¨catalogå±æ€§ã€‚
      * <p>
      * 
-     * Ò»°ãÇé¿öÏÂÄú²»ĞèÒª×öÈÎºÎÉèÖÃ£¬³ı·ÇÄúËùÔÚµÄ¹«Ë¾»ò×éÖ¯ÓĞ½øÒ»²½µÄ¹æ·¶¡£
+     * ä¸€èˆ¬æƒ…å†µä¸‹æ‚¨ä¸éœ€è¦åšä»»ä½•è®¾ç½®ï¼Œé™¤éæ‚¨æ‰€åœ¨çš„å…¬å¸æˆ–ç»„ç»‡æœ‰è¿›ä¸€æ­¥çš„è§„èŒƒã€‚
      * <p>
      * 
-     * catalogµÄÒâÒåÇë²Î¿¼ {@link Connection#setCatalog(String)}
-     * £¬ÌØ±ğµØ£¬ÔÚÖ§³Ö´¹Ö±ÇĞ·ÖµÄÊı¾İÔ´ÖĞ£¬Ò²¿ÉÒÔÊ¹ÓÃcatalog×÷ÎªÇĞ·ÖµÄÒ»¸ö²Î¿¼
+     * catalogçš„æ„ä¹‰è¯·å‚è€ƒ {@link Connection#setCatalog(String)}
+     * ï¼Œç‰¹åˆ«åœ°ï¼Œåœ¨æ”¯æŒå‚ç›´åˆ‡åˆ†çš„æ•°æ®æºä¸­ï¼Œä¹Ÿå¯ä»¥ä½¿ç”¨catalogä½œä¸ºåˆ‡åˆ†çš„ä¸€ä¸ªå‚è€ƒ
      * <p>
      * 
      * @see Connection#setCatalog(String)

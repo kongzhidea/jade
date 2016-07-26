@@ -22,8 +22,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ÓÃ{@link SQLParam} ×¢½â±ê×¢DAO·½·¨µÄ²ÎÊı£¬Ö¸¶¨²ÎÊıµÄÃû³Æ£¬Ê¹µÃ¿ÉÒÔÔÚSQLÖĞÍ¨¹ı":²ÎÊıÃû"µÄ·½Ê½Ê¹ÓÃËü¡£
- * JadeÍ¨¹ıPreparedStatment¶¯Ì¬µØ°Ñ²ÎÊıÖµÌá½»¸øÊı¾İ¿âÖ´ĞĞ¡£
+ * ç”¨{@link SQLParam} æ³¨è§£æ ‡æ³¨DAOæ–¹æ³•çš„å‚æ•°ï¼ŒæŒ‡å®šå‚æ•°çš„åç§°ï¼Œä½¿å¾—å¯ä»¥åœ¨SQLä¸­é€šè¿‡":å‚æ•°å"çš„æ–¹å¼ä½¿ç”¨å®ƒã€‚
+ * Jadeé€šè¿‡PreparedStatmentåŠ¨æ€åœ°æŠŠå‚æ•°å€¼æäº¤ç»™æ•°æ®åº“æ‰§è¡Œã€‚
  * <p>
  * 
  * <span style='margin-left:50px;'>
@@ -32,8 +32,8 @@ import java.lang.annotation.Target;
  * <span style='margin-left:50px;'> public User getUser(@SQLParam("userId") String id);</code><span>
  * <p>
  * 
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
- * @author ÁÎº­ [in355hz@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
+ * @author å»–æ¶µ [in355hz@gmail.com]
  */
 @Target( { ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
@@ -41,9 +41,9 @@ import java.lang.annotation.Target;
 public @interface SQLParam {
 
     /**
-     * Ö¸³öÕâ¸öÖµÊÇ SQL Óï¾äÖĞÄÄ¸ö²ÎÊıµÄÖµ
+     * æŒ‡å‡ºè¿™ä¸ªå€¼æ˜¯ SQL è¯­å¥ä¸­å“ªä¸ªå‚æ•°çš„å€¼
      * 
-     * @return ¶ÔÓ¦ SQL Óï¾äÖĞÄÄ¸ö²ÎÊı
+     * @return å¯¹åº” SQL è¯­å¥ä¸­å“ªä¸ªå‚æ•°
      */
     String value();
 }

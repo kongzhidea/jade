@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * ÊµÏÖ¹¤¾ßÀà£¬¼ì²é²ÎÊı»¯ÀàĞÍµÄ²ÎÊıÀàĞÍ¡£
+ * å®ç°å·¥å…·ç±»ï¼Œæ£€æŸ¥å‚æ•°åŒ–ç±»å‹çš„å‚æ•°ç±»å‹ã€‚
  * 
  * @author han.liao
- * @author ÍõÖ¾ÁÁ [qieqie.wang@gmail.com]
+ * @author ç‹å¿—äº® [qieqie.wang@gmail.com]
  */
 @SuppressWarnings({ "rawtypes" })
 public class GenericUtils {
@@ -27,7 +27,7 @@ public class GenericUtils {
     private static final Class[] EMPTY_CLASSES = new Class[0];
 
     /**
-     * ·µ»ØÀàĞÍList<E>¡¢Map<K,V>ÖĞµÄE¡¢K¡¢V
+     * è¿”å›ç±»å‹List<E>ã€Map<K,V>ä¸­çš„Eã€Kã€V
      * 
      * @param invocationClass
      * @param targetType
@@ -48,11 +48,11 @@ public class GenericUtils {
     }
 
     /**
-     * ÇódeclaringClassÀàÖĞÉùÃ÷µÄ·ºĞÍÀàĞÍ±äÁ¿ÔÚinvocationClassÖĞÕæÕıµÄÖµ
+     * æ±‚declaringClassç±»ä¸­å£°æ˜çš„æ³›å‹ç±»å‹å˜é‡åœ¨invocationClassä¸­çœŸæ­£çš„å€¼
      * 
-     * @param invocationClass ±à³ÌÊ±Ê¹ÓÃµÄÀà
-     * @param declaringClass ÉùÃ÷ÀàĞÍ±äÁ¿typeVarNameµÄÀà
-     * @param typeVarName ·ºĞÍ±äÁ¿Ãû
+     * @param invocationClass ç¼–ç¨‹æ—¶ä½¿ç”¨çš„ç±»
+     * @param declaringClass å£°æ˜ç±»å‹å˜é‡typeVarNameçš„ç±»
+     * @param typeVarName æ³›å‹å˜é‡å
      * @return
      */
     public static final Class resolveTypeVariable(Class invocationClass, Class declaringClass,
@@ -72,10 +72,10 @@ public class GenericUtils {
 
     /**
      * 
-     * Çó¸ø¶¨µÄinvocationClassÀàÖĞ£¬Ä¿±êÀàĞÍtypeµÄÖµ
+     * æ±‚ç»™å®šçš„invocationClassç±»ä¸­ï¼Œç›®æ ‡ç±»å‹typeçš„å€¼
      * 
-     * Èç¹ûtypeÒÑÊÇÀàĞÍ£¬ÔòÖ±½Ó·µ»ØËü£»
-     * Èç¹ûtypeÊÇÀàĞÍ±äÁ¿( {@link TypeVariable})£¬ÔòÇóËûµÄÖµ£»
+     * å¦‚æœtypeå·²æ˜¯ç±»å‹ï¼Œåˆ™ç›´æ¥è¿”å›å®ƒï¼›
+     * å¦‚æœtypeæ˜¯ç±»å‹å˜é‡( {@link TypeVariable})ï¼Œåˆ™æ±‚ä»–çš„å€¼ï¼›
      * 
      * @param invocationClass
      * @param targetType
@@ -85,16 +85,16 @@ public class GenericUtils {
         if (targetType == null) {
             throw new NullPointerException("TypeVariable is null");
         }
-        // ClassÀàĞÍ
+        // Classç±»å‹
         if (targetType instanceof Class) {
             return (Class) targetType;
         }
-        // ²ÎÊıÈİÆ÷ÀàĞÍ£¨×¢Òâ£º·µ»ØµÄÊÇÈİÆ÷ÀàĞÍ£¬¶ø·Ç¾ßÌåµÄ²ÎÊıÀàĞÍ¡£²»Òª»ìÏı£¡£©
+        // å‚æ•°å®¹å™¨ç±»å‹ï¼ˆæ³¨æ„ï¼šè¿”å›çš„æ˜¯å®¹å™¨ç±»å‹ï¼Œè€Œéå…·ä½“çš„å‚æ•°ç±»å‹ã€‚ä¸è¦æ··æ·†ï¼ï¼‰
         if (targetType instanceof ParameterizedType) {
             return resolveTypeVariable(invocationClass,
                 (Type) ((ParameterizedType) targetType).getRawType());
         }
-        // Êı×éÀàĞÍ
+        // æ•°ç»„ç±»å‹
         if (targetType instanceof GenericArrayType) {
             Type componentType = ((GenericArrayType) targetType).getGenericComponentType();
             componentType = resolveTypeVariable(invocationClass, componentType);
@@ -150,13 +150,13 @@ public class GenericUtils {
     }
 
     /**
-     * ÊÕ¼¯ÀàµÄËùÓĞ³£Á¿¡£
+     * æ”¶é›†ç±»çš„æ‰€æœ‰å¸¸é‡ã€‚
      * 
-     * @param clazz - ÊÕ¼¯Ä¿±ê
-     * @param findAncestor - ÊÇ·ñ²éÕÒ¸¸Àà
-     * @param findInterfaces - ÊÇ·ñ²éÕÒ½Ó¿Ú
+     * @param clazz - æ”¶é›†ç›®æ ‡
+     * @param findAncestor - æ˜¯å¦æŸ¥æ‰¾çˆ¶ç±»
+     * @param findInterfaces - æ˜¯å¦æŸ¥æ‰¾æ¥å£
      * 
-     * @return {@link Map} °üº¬ÀàµÄËùÓĞ³£Á¿
+     * @return {@link Map} åŒ…å«ç±»çš„æ‰€æœ‰å¸¸é‡
      */
     public static Map<String, Object> getConstantFrom(Class clazz, // NL
                                                  boolean findAncestor, boolean findInterfaces) {
@@ -182,18 +182,18 @@ public class GenericUtils {
         return map;
     }
 
-    // Ìî³ä¾²Ì¬³£Á¿
+    // å¡«å……é™æ€å¸¸é‡
     protected static void fillConstantFrom(Class clazz, HashMap<String, Object> map) {
 
         Field fields[] = clazz.getDeclaredFields();
         for (Field field : fields) {
             if (field.isSynthetic()) {
-                continue; // ºöÂÔÏµÍ³³£Á¿
+                continue; // å¿½ç•¥ç³»ç»Ÿå¸¸é‡
             }
 
             int modifiers = field.getModifiers();
             if (!Modifier.isStatic(modifiers)) {
-                continue; // ºöÂÔ·Ç¾²Ì¬³£Á¿
+                continue; // å¿½ç•¥éé™æ€å¸¸é‡
             }
 
             try {
@@ -210,17 +210,17 @@ public class GenericUtils {
         }
     }
 
-    // ²âÊÔ´úÂë
+    // æµ‹è¯•ä»£ç 
     public static void main(String... args) {
 
-        // Êä³öËùÓĞ³£Á¿
-        System.out.println("Êä³öËùÓĞ³£Á¿");
+        // è¾“å‡ºæ‰€æœ‰å¸¸é‡
+        System.out.println("è¾“å‡ºæ‰€æœ‰å¸¸é‡");
         Map<String, ?> constants = getConstantFrom(Character.class, true, true);
         System.out.println(constants);
 
-        // Êä³ö·½·¨µÄ·µ»ØÀàĞÍ
+        // è¾“å‡ºæ–¹æ³•çš„è¿”å›ç±»å‹
         System.out.println();
-        System.out.println("Êä³ö·½·¨µÄ·µ»ØÀàĞÍ" + java.lang.ClassLoader.class.getName());
+        System.out.println("è¾“å‡ºæ–¹æ³•çš„è¿”å›ç±»å‹" + java.lang.ClassLoader.class.getName());
         for (Method method : ClassLoader.class.getMethods()) {
             Class<?>[] classes = resolveTypeParameters(ClassLoader.class,
                 method.getGenericReturnType());
@@ -228,18 +228,18 @@ public class GenericUtils {
             System.out.println(Arrays.toString(classes));
         }
 
-        // Êä³ö³¬ÀàµÄÀàĞÍ
+        // è¾“å‡ºè¶…ç±»çš„ç±»å‹
         System.out.println();
-        System.out.println("Êä³ö³¬ÀàµÄÀàĞÍ" + java.util.Properties.class.getName());
+        System.out.println("è¾“å‡ºè¶…ç±»çš„ç±»å‹" + java.util.Properties.class.getName());
         Type genericSuperclassType = java.util.Properties.class.getGenericSuperclass();
         System.out.print(genericSuperclassType + " = ");
         System.out.println(Arrays
             .toString(resolveTypeParameters(java.util.Properties.class, genericSuperclassType)));
 
         System.out.println();
-        System.out.println("Êä³öÅÉÉúÀàµÄÀàĞÍ" + java.util.Properties.class.getName());
+        System.out.println("è¾“å‡ºæ´¾ç”Ÿç±»çš„ç±»å‹" + java.util.Properties.class.getName());
         for (Type genericInterfaceType : java.util.Properties.class.getGenericInterfaces()) {
-            // Êä³öÅÉÉúÀàµÄÀàĞÍ
+            // è¾“å‡ºæ´¾ç”Ÿç±»çš„ç±»å‹
             Class<?>[] classes = resolveTypeParameters(java.util.Properties.class,
                 genericInterfaceType);
             System.out.print(genericInterfaceType + " = ");
