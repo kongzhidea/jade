@@ -30,6 +30,7 @@
 ##使用方式，见test里面的样例
 *
 * mapper解析
+    * 获取SqlType为read或者write，根据sql和方法名一块来判断。
     * ReturnGeneratedKeys 返回自增Id， 返回值为primitive（如int）或者Wrapper（如Integer）类型都可以
     * 批量添加 无法生成自增Id
     * 返回单行
