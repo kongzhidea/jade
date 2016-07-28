@@ -2,7 +2,7 @@
 ***
 
 ##需要在spring中配置的类
-* SpringDataSourceFactory 在applicationContext.xml中配置 dataSource
+* SpringDataSourceFactory 在applicationContext.xml中配置 dataSource，推荐配置为SpringDataSourceFactoryDelegate，这样可以自定义SpringDataSourceFactory
 * DataAccessFactoryAdapter  对dataSourceFactory的封装， 获取DataAccess
 * interpreter 需要在xml中配置，如 SpringInterpreterFactory， 默认会加载系统sql解析器。 如果自定义解析器 最好order值设置为负数，让其先执行。
 * DefaultRowMapperFactory， 获取rowMapper
