@@ -12,12 +12,15 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
        default-autowire="no" default-lazy-init="true">
 
-    <bean id="jade.dataSourceFactory"
-          class="net.paoding.rose.jade.context.spring.SpringDataSourceFactory"/>
+    <!--<bean id="jade.dataSourceFactory"-->
+    <!--class="net.paoding.rose.jade.context.spring.SpringDataSourceFactory"/>-->
+
+    <bean id="springDataSourceFactoryDelegate"
+          class="net.paoding.rose.jade.context.spring.SpringDataSourceFactoryDelegate"/>
 
     <bean id="jade.dataAccessFactory"
           class="net.paoding.rose.jade.dataaccess.DataAccessFactoryAdapter">
-        <property name="dataSourceFactory" ref="jade.dataSourceFactory"/>
+        <property name="dataSourceFactory" ref="springDataSourceFactoryDelegate"/>
     </bean>
 
     <bean id="jade.interpreterFactory"

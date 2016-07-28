@@ -1,38 +1,35 @@
 package net.paoding.rose.jade.context.spring;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.sql.DataSource;
-
 import net.paoding.rose.jade.annotation.DAO;
 import net.paoding.rose.jade.dataaccess.DataSourceFactory;
 import net.paoding.rose.jade.dataaccess.DataSourceHolder;
 import net.paoding.rose.jade.statement.StatementMetaData;
-
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.sql.DataSource;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * 
+ * 推荐使用 SpringDataSourceFactoryDelegate， 这样可以配置在第三方jar包中配置jade.dataSourceFactory 来替换SpringDataSourceFactory
  * @author 王志亮 [qieqie.wang@gmail.com]
  */
 public class SpringDataSourceFactory implements DataSourceFactory, ApplicationContextAware {
 
     private Log logger = LogFactory.getLog(getClass());
 
-    private ListableBeanFactory applicationContext;
+    private ApplicationContext applicationContext;
 
     private ConcurrentHashMap<Class<?>, DataSourceHolder> cachedDataSources = new ConcurrentHashMap<Class<?>, DataSourceHolder>();
 
     public SpringDataSourceFactory() {
     }
 
-    public SpringDataSourceFactory(ListableBeanFactory applicationContext) {
+    public SpringDataSourceFactory(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
