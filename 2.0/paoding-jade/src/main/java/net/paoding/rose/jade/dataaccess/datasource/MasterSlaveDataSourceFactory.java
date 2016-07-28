@@ -30,16 +30,16 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * 在master-slave模式下的应用程序可以使用，即所有写操作使用master，所有读操作使用slave
- * <p>
- * 
+ * <p/>
+ * <p/>
  * 以下演示了使用他的Java代码（Spring配置文件的配置也可以参考以下代码并进行等价转化)
- * 
+ * <p/>
  * <pre>
  * MasterSlaveDataSourceFactory mainFactory = new MasterSlaveDataSourceFactory();
- * 
+ *
  * DataSource master = getMasterDataSource();
  * mainFactory.setMasters(new SimpleDataSourceFactory(master));
- * 
+ *
  * List&lt;DataSource&gt; slaves = getSlaveDataSources();
  * if (queryFromMaster) {
  *     slaves = new ArrayList&lt;DataSource&gt;(slaves);
@@ -47,27 +47,26 @@ import org.springframework.util.CollectionUtils;
  * }
  * mainFactory.setSlaves(new RandomDataSourceFactory(slaves));
  * </pre>
- * 
+ *
  * @author 王志亮 [qieqie.wang@gmail.com]
- * 
  */
 public class MasterSlaveDataSourceFactory implements DataSourceFactory {
 
-    private DataSourceFactory masters = new RandomDataSourceFactory();
+    private DataSourceFactory masters;
 
-    private DataSourceFactory slaves = new RandomDataSourceFactory();
+    private DataSourceFactory slaves;
 
     public MasterSlaveDataSourceFactory() {
     }
 
+
     /**
-     * 
      * @param master
      * @param slaves
      * @param queryFromMaster true代表允许从master数据源查询数据
      */
     public MasterSlaveDataSourceFactory(DataSource master, List<DataSource> slaves,
-            boolean queryFromMaster) {
+                                        boolean queryFromMaster) {
         if (queryFromMaster && !CollectionUtils.containsInstance(slaves, master)) {
             slaves = new ArrayList<DataSource>(slaves);
             slaves.add(master);
@@ -76,30 +75,26 @@ public class MasterSlaveDataSourceFactory implements DataSourceFactory {
         setMasters(new SimpleDataSourceFactory(master));
     }
 
-    //------------------
+    public void setMaster(DataSource master) {
+        this.masters = new SimpleDataSourceFactory(master);
+    }
 
-    /**
-     * 
-     * @param masters
-     * @see RandomDataSourceFactory
-     * @see SimpleDataSourceFactory
-     */
     public void setMasters(DataSourceFactory masters) {
         this.masters = masters;
     }
 
-    /**
-     * 
-     * @param slaves
-     * @see RandomDataSourceFactory
-     */
+
+    public void setSlaves(List<DataSource> slaves) {
+        this.slaves = new RandomDataSourceFactory(slaves);
+    }
+
     public void setSlaves(DataSourceFactory slaves) {
         this.slaves = slaves;
     }
 
     @Override
     public DataSourceHolder getHolder(StatementMetaData metaData,
-            Map<String, Object> runtimeProperties) {
+                                      Map<String, Object> runtimeProperties) {
         if (metaData.getSQLType() != SQLType.READ) {
             return masters.getHolder(metaData, runtimeProperties);
         } else {
