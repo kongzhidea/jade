@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import net.paoding.rose.jade.annotation.SQLType;
+import net.paoding.rose.jade.annotation.UseMaster;
 import net.paoding.rose.jade.dataaccess.DataSourceFactory;
 import net.paoding.rose.jade.dataaccess.DataSourceHolder;
 import net.paoding.rose.jade.statement.StatementMetaData;
@@ -95,10 +96,20 @@ public class MasterSlaveDataSourceFactory implements DataSourceFactory {
     @Override
     public DataSourceHolder getHolder(StatementMetaData metaData,
                                       Map<String, Object> runtimeProperties) {
-        if (metaData.getSQLType() != SQLType.READ) {
+        if (useMaster(metaData)) {
             return masters.getHolder(metaData, runtimeProperties);
         } else {
             return slaves.getHolder(metaData, runtimeProperties);
         }
+    }
+
+    private boolean useMaster(StatementMetaData metaData) {
+        if (metaData.getSQLType() == SQLType.WRITE) {
+            return true;
+        }
+        if (metaData.getMethod().isAnnotationPresent(UseMaster.class)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -48,6 +48,7 @@
     * 在代码中 默认已经配置了从spring中获取 dataAccessFactory，rowMapperFactory，interpreterFactory，只需要扫描classpath*:jade/applicationContext*.xml路径即可。
 * 扫描dao的配置：支持
 * 分库：支持spring配置主从分离， 不支持从zk中配置
+    * 可以配置MasterSlaveDataSourceFactory，设置主从分离，在xml中配置为jade.dataSourceFactory
 * 分表：不支持
 
 
