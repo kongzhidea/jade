@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
  * <p>
  * &#64;SQL(&quot;....where name like :1&quot;)<br>
  * public List<Xxx> find(String likeValue, &#64;ShardBy String pageId);
- * 
+ *
  * <pre>
  * </pre>
- * 
+ *
  * @author 王志亮 [qieqie.wang@gmail.com]
  */
 @Target({ ElementType.PARAMETER })
@@ -24,7 +24,7 @@ public @interface ShardBy {
 
     /**
      * bean参数情况下的属性名
-     * 
+     *
      * @return
      */
     String value() default "";

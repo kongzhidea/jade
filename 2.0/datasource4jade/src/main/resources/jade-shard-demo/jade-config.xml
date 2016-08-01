@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+ 
+<!DOCTYPE jade-config SYSTEM "jade-config.DTD">
+
+<jade-config>
+
+	<!--
+		定义一个数据分类, 给 @Dao(catalog=”demo”) 使用。在一个文件中 可以配置多个不同的 catalog.
+	-->
+	<catalog id="demo">
+
+		<!--
+			default-dbname 用于配置这个 catalog(demo) 使用的 XceAdapter 数据源 (test)。
+
+			可以不明确配置 default-dbname, 此时默认使用 catalog 的名称 (demo) 作为数据源。
+		-->
+		<default-dbname>test</default-dbname>
+
+		<!--
+			定义一个需要做散表 / 散库策略的数据表, 如果不需要进行散表 / 散库 的表, 就不用配置。
+		-->
+		<table name="jade">
+
+			<!--
+				用 dbname 指定数据表所在的 XceAdapter 数据源。如果没有配置， 就使用前面定义的 default-dbname
+				数据源。 
+
+				<dbname>example</dbname>
+			-->
+
+			<!-- 如果需要散库, 配置 db-partitions -->
+			<db-partitions>
+
+				<!-- 配置散库方式, 目前只支持 hash 散库方式 -->
+				<hash>
+					<!-- 散库所依据的列 -->
+					<by-column>id</by-column>
+
+					<!-- 散库的分区数目 -->
+					<partitions>3</partitions>
+
+					<!--
+						散库后的分区名称, 对应于 XceAdapter 方法 getDataSource(bizname, pattern) 的
+						pattern 参数。
+					-->
+					<target-pattern>test_{0}</target-pattern>
+				</hash>
+			</db-partitions>
+
+			<!-- 如果需要散表, 配置 table-partitions -->
+			<table-partitions>
+
+				<!-- 配置散表方式, 目前只支持 hash 散库方式 -->
+				<hash>
+					<!-- 散表所依据的列 -->
+					<by-column>id</by-column>
+
+					<!-- 散表的分区数目 -->
+					<partitions>3</partitions>
+
+					<!-- 散表的分区名称 -->
+					<target-pattern>jade_{0}</target-pattern>
+				</hash>
+			</table-partitions>
+		</table>
+
+		<!-- 定义数据表，直接重定向到另一张数据表 -->
+		<table name="account">
+
+			<!--
+				用 dbname 指定数据表所在的 XceAdapter 数据源。如果没有配置， 就使用前面定义的 default-dbname
+				数据源。
+			-->
+			<dbname>example</dbname>
+
+			<!-- 配置直接重定向 -->
+			<table-partitions>
+
+				<!-- 重定向所有的查询访问另一张数据表  -->
+				<direct>
+
+					<!-- 新数据表的名称 -->
+					<target-pattern>account_alias</target-pattern>
+				</direct>
+			</table-partitions>
+		</table>
+	</catalog>
+
+	<!-- 
+		定义一个数据分类, 给 @Dao(catalog=”customer”) 使用。
+    -->
+	<catalog id="customer">
+
+		<!-- 所有数据表都访问同一个 XceAdapter 数据源 -->
+		<default-dbname>customer_alias</default-dbname>
+	</catalog>
+</jade-config>

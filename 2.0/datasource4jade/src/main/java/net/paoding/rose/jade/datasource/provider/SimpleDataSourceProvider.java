@@ -27,9 +27,10 @@ public class SimpleDataSourceProvider implements DataSourceProvider {
 
     private LocalCache slavesCached = new LocalCache();
 
-    public DataSource getReadDataSource(String catalog) {
-        String url = getReadUrl(catalog);
-        String key = catalog + url;
+    @Override
+    public DataSource getReadDataSource(String catalog, String pattern) {
+        String url = getReadUrl(catalog, pattern);
+        String key = catalog + url + pattern;
         DataSource dataSource = (DataSource) slavesCached.getValue(key);
         if (dataSource == null) {
             synchronized (slavesCached) {
@@ -43,30 +44,23 @@ public class SimpleDataSourceProvider implements DataSourceProvider {
     }
 
     @Override
-    public DataSource getReadDataSource(String catalog, String pattern) {
-        return getReadDataSource(catalog);
-    }
+    public DataSource getWriteDataSource(String catalog, String pattern) {
+        String key = catalog + pattern;
 
-    public DataSource getWriteDataSource(String catalog) {
-        DataSource dataSource = (DataSource) masterCached.getValue(catalog);
+        DataSource dataSource = (DataSource) masterCached.getValue(key);
         if (dataSource == null) {
             synchronized (masterCached) {
                 if (dataSource == null) {
-                    String url = getWriteUrl(catalog);
+                    String url = getWriteUrl(catalog, pattern);
                     dataSource = createDataSource(url);
-                    masterCached.putValue(catalog, dataSource, CACHE_EXPIRE_S);
+                    masterCached.putValue(key, dataSource, CACHE_EXPIRE_S);
                 }
             }
         }
-        return (DataSource) masterCached.getValue(catalog);
+        return (DataSource) masterCached.getValue(key);
     }
 
-    @Override
-    public DataSource getWriteDataSource(String catalog, String pattern) {
-        return getWriteDataSource(catalog);
-    }
-
-    private String getReadUrl(String catalog) {
+    private String getReadUrl(String catalog, String pattern) {
         if ("test".equals(catalog)) {
             String url1 = "jdbc:mysql://localhost:3306/test?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
             String url2 = "jdbc:mysql://localhost:3306/kk?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
@@ -75,13 +69,33 @@ public class SimpleDataSourceProvider implements DataSourceProvider {
             list.add(url2);
             return random(list);
         }
+        if ("catalog_blog".equals(catalog)) {
+            String url;
+            if (pattern == null || "".equals(pattern)) {
+                url = "jdbc:mysql://localhost:3306/blog?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
+            } else {
+                url = "jdbc:mysql://localhost:3306/" + pattern + "?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
+            }
+            List<String> list = new ArrayList<String>();
+            list.add(url);
+            return random(list);
+        }
         return null;
     }
 
 
-    private String getWriteUrl(String catalog) {
+    private String getWriteUrl(String catalog, String pattern) {
         if ("test".equals(catalog)) {
             return "jdbc:mysql://localhost:3306/test?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
+        }
+        if ("catalog_blog".equals(catalog)) {
+            String url;
+            if (pattern == null || "".equals(pattern)) {
+                url = "jdbc:mysql://localhost:3306/blog?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
+            } else {
+                url = "jdbc:mysql://localhost:3306/" + pattern + "?user=root&password=&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true";
+            }
+            return url;
         }
         return null;
     }

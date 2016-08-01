@@ -14,14 +14,13 @@ import net.paoding.rose.jade.annotation.ShardBy;
 
 /**
  * {@link StatementMetaData} 封装、缓存了一个DAO方法的相关信息
- * <p>
- *
+ * <p/>
+ * <p/>
  * 获取Dao属性：catalog，metaData.getDAOMetaData().getDAOClass().getAnnotation(DAO.class).catalog()
  *
- * 
  * @author 王志亮 [qieqie.wang@gmail.com]
  */
-@SuppressWarnings({ "rawtypes" })
+@SuppressWarnings({"rawtypes"})
 public class StatementMetaData {
 
     /**
@@ -41,6 +40,7 @@ public class StatementMetaData {
 
     /**
      * SQL类型（查询类型或者更新类型）：默认由方法名和SQL语句判断，除非强制指定。
+     *
      * @see SQLType
      */
     private final SQLType sqlType;
@@ -51,37 +51,37 @@ public class StatementMetaData {
     private DynamicReturnGeneratedKeys returnGeneratedKeys;
 
     /**
-     * 
+     *
      */
     private AfterInvocationCallback afterInvocationCallback;
 
     /**
      * DAO方法的“最低返回类型”。
-     * <P>
+     * <p/>
      * 大部分情况returnType和method.getReturnType是相同的，但对于一些声明为泛型的返回类型，
      * Jade会尽量提取出实际的类型作为returnType
-     * <P>
+     * <p/>
      * 比如：
-     * 
+     * <p/>
      * <pre>
      * //@DAO、@SQL注解从略
      * public interface BaseDAO&lt;E&gt; {
-     * 
+     *
      *     public E getById(Long id);
-     * 
+     *
      * }
      * public interface UserDAO extends BaseDAO[User] {
-     * 
+     *
      * }
      * </pre>
-     * 
+     * <p/>
      * 此时，UserDAO#getById方法的returnType是User，而非Object;
      */
     private final Class returnType;
 
     /**
      * 方法返回参数的范型类型（不支持多级）－从method中获取并缓存
-     * 
+     * <p/>
      * <pre>
      * 示例：
      * （1） List<E>中的E
@@ -91,7 +91,7 @@ public class StatementMetaData {
 
     /**
      * {@link SQLParam} 注解数组－从method中获取并缓存
-     * <p>
+     * <p/>
      * 此数组的长度为方法的参数个数，如果对应位置的方法参数没有注解 {@link SQLParam},该位置的元素值为null
      */
     private final SQLParam[] sqlParams;
@@ -138,7 +138,7 @@ public class StatementMetaData {
                     int paramStart = toString.indexOf("(");
                     int methodNameStart = toString.lastIndexOf('.', paramStart) + 1;
                     return toString.substring(methodNameStart) + "@" //
-                           + StatementMetaData.this.method.getDeclaringClass().getName();
+                            + StatementMetaData.this.method.getDeclaringClass().getName();
                 }
 
                 @Override
@@ -150,7 +150,7 @@ public class StatementMetaData {
         this.sql = sqlAnnotation.value();
         this.sqlType = resolveSQLType(sqlAnnotation);
         ReturnGeneratedKeys generatedKeysAnnotation = method
-            .getAnnotation(ReturnGeneratedKeys.class);
+                .getAnnotation(ReturnGeneratedKeys.class);
         if (generatedKeysAnnotation != null) {
             try {
                 this.returnGeneratedKeys = generatedKeysAnnotation.value().newInstance();
@@ -164,9 +164,9 @@ public class StatementMetaData {
         }
 
         this.returnType = GenericUtils.resolveTypeVariable(daoMetaData.getDAOClass(),
-            method.getGenericReturnType());
+                method.getGenericReturnType());
         this.parameterTypesOfReturnType = GenericUtils
-            .resolveTypeParameters(daoMetaData.getDAOClass(), method.getGenericReturnType());
+                .resolveTypeParameters(daoMetaData.getDAOClass(), method.getGenericReturnType());
 
         Annotation[][] annotations = method.getParameterAnnotations();
         this.parameterCount = annotations.length;
@@ -180,7 +180,7 @@ public class StatementMetaData {
                 if (annotation instanceof ShardBy) {
                     if (shardByIndex >= 0) {
                         throw new IllegalArgumentException(
-                            "duplicated @" + ShardBy.class.getName());
+                                "duplicated @" + ShardBy.class.getName());
                     }
                     shardByIndex = index;
                     shardBy = (ShardBy) annotation;
@@ -256,7 +256,7 @@ public class StatementMetaData {
 
     /**
      * 设置挂在DAO方法上的属性
-     * 
+     *
      * @param name
      * @param value
      */
@@ -272,7 +272,6 @@ public class StatementMetaData {
     }
 
     /**
-     * 
      * @param name
      * @return 获取由 {@link #setAttribute(String, Object)} 的属性
      */
@@ -287,7 +286,7 @@ public class StatementMetaData {
             for (int i = 0; i < SELECT_PATTERNS.length; i++) {
                 // 用正则表达式匹配 SELECT 语句
                 if (SELECT_PATTERNS[i].matcher(getSQL()).find() //
-                    || SELECT_PATTERNS[i].matcher(getMethod().getName()).find()) {
+                        || SELECT_PATTERNS[i].matcher(getMethod().getName()).find()) {
                     sqlType = SQLType.READ;
                     break;
                 }
@@ -318,26 +317,26 @@ public class StatementMetaData {
         return daoMetaData.getDAOClass().getName() + '#' + method.getName();
     }
 
-    private static Pattern[] SELECT_PATTERNS = new Pattern[] {
-                                                               //
-                                                               Pattern.compile("^\\s*SELECT.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*GET.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*FIND.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*READ.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*QUERY.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*COUNT.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*SHOW.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*DESC.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
-                                                               Pattern.compile("^\\s*DESCRIBE.*",
-                                                                   Pattern.CASE_INSENSITIVE), //
+    private static Pattern[] SELECT_PATTERNS = new Pattern[]{
+            //
+            Pattern.compile("^\\s*SELECT.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*GET.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*FIND.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*READ.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*QUERY.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*COUNT.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*SHOW.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*DESC.*",
+                    Pattern.CASE_INSENSITIVE), //
+            Pattern.compile("^\\s*DESCRIBE.*",
+                    Pattern.CASE_INSENSITIVE), //
     };
 
 }

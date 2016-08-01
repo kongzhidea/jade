@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<jade-config>
+
+    <!--
+        定义一个数据分类, 给 @Dao(catalog=”demo”) 使用。在一个文件中 可以配置多个不同的 catalog.
+    -->
+    <catalog id="catalog_blog">
+
+        <default-dbname>blog</default-dbname>
+
+        <!--
+            定义一个需要做散表 / 散库策略的数据表, 如果不需要进行散表 / 散库 的表, 就不用配置。
+        -->
+        <table name="blog">
+
+            <!-- 如果需要散库, 配置 db-partitions -->
+            <db-partitions>
+                <!-- 配置散库方式, 目前只支持 hash 散库方式 -->
+                <hash>
+                    <!-- 散库所依据的列 -->
+                    <by-column>user_id</by-column>
+                    <!-- 散库的分区数目 -->
+                    <partitions>1</partitions>
+                    <target-pattern>blog_{0}</target-pattern>
+                </hash>
+            </db-partitions>
+
+            <!-- 如果需要散表, 配置 table-partitions -->
+            <table-partitions>
+                <!-- 配置散表方式, 目前只支持 hash 散库方式 -->
+                <hash>
+                    <!-- 散表所依据的列 -->
+                    <by-column>user_id</by-column>
+
+                    <!-- 散表的分区数目 -->
+                    <partitions>4</partitions>
+
+                    <!-- 散表的分区名称 -->
+                    <target-pattern>blog_{0}</target-pattern>
+                </hash>
+            </table-partitions>
+        </table>
+    </catalog>
+</jade-config>

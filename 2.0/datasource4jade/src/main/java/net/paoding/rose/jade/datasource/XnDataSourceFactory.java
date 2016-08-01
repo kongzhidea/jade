@@ -1,4 +1,4 @@
-package net.paoding.rose.jade.datasource.ms;
+package net.paoding.rose.jade.datasource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +24,6 @@ public class XnDataSourceFactory implements DataSourceFactory, ApplicationContex
 
     private SpringDataSourceFactory inner = new SpringDataSourceFactory();
 
-    private Map<String, DataSourceHolder> masterCached = new HashMap<String, DataSourceHolder>();
-
-    private Map<String, DataSourceHolder> slaveCached = new HashMap<String, DataSourceHolder>();
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.inner.setApplicationContext(applicationContext);
@@ -40,16 +36,8 @@ public class XnDataSourceFactory implements DataSourceFactory, ApplicationContex
         if (holder == null) {
             String catalog = metaData.getDAOMetaData().getDAOClass().getAnnotation(DAO.class).catalog();
             if (catalog != null && catalog.length() > 0) {
-                Map<String, DataSourceHolder> cached = slaveCached;
-                if (useMaster(metaData)) {
-                    cached = masterCached;
-                }
-                holder = cached.get(catalog);
-                if (holder == null) {
-                    DataSource dataSource = new XnDataSource(this, catalog, useMaster(metaData));
-                    holder = new DataSourceHolder(dataSource);
-                    cached.put(catalog, holder);
-                }
+                DataSource dataSource = new XnDataSource(catalog, useMaster(metaData), metaData, runtimeProperties);
+                holder = new DataSourceHolder(dataSource);
             }
         }
         return holder;

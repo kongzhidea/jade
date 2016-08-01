@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * UserDAO 中设置 catalog，从而删除本地配置的数据源
  */
-public class UserDaoTestMasterSlave extends BaseTest {
+public class UserDaoTest extends BaseTest {
 
     UserService userService;
 

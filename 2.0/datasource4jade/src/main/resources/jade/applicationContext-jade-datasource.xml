@@ -13,5 +13,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
        default-autowire="no" default-lazy-init="true">
 
     <bean id="jade.dataSourceFactory"
-          class="net.paoding.rose.jade.datasource.ms.XnDataSourceFactory"/>
+          class="net.paoding.rose.jade.datasource.XnDataSourceFactory"/>
+
+    <!-- 散表，散库 -->
+    <bean
+            class="net.paoding.rose.jade.route.interpreter.RouterInterpreter"/>
 </beans>
