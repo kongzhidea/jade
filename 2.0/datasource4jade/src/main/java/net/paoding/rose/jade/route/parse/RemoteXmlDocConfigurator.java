@@ -25,12 +25,6 @@ public class RemoteXmlDocConfigurator extends XmlDocConfigurator {
     // 配置文件名称
     public static final String CONFIG_FILE = "jade-config.xml";
 
-    // 订阅的唯一名称
-    public static final String SUBSCRIBE_NAME = "XmlJadeConfig";
-
-    // 命令参数名称
-    protected static final String COMMAND = "#COMMAND";
-
     /**
      * 创建: RemoteXmlDocXceConfigurator 配置。
      */
