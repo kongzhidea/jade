@@ -54,6 +54,8 @@ public class RouterLoader {
 
             if (HASH.equalsIgnoreCase(child.getTagName())) {
                 return createHashRouter(column, pattern, partitions);
+            } else if (HASHCODE.equalsIgnoreCase(child.getTagName())) {
+                return createStringHashCodeRouter(column, pattern, partitions);
             } else {
                 if (logger.isDebugEnabled()) {
                     logger.debug("router '" + child.getTagName() + "' is not supported");
@@ -118,5 +120,62 @@ public class RouterLoader {
             return null;
         }
     }
+
+    private static StringHashCodeRouter createStringHashCodeRouter(String column, String pattern,
+                                                                   String partitions) {
+
+        // 检查所需的属性
+        if (column == null) {
+
+            // 输出日志
+            if (logger.isErrorEnabled()) {
+                logger.error("Router 'hashcode' must have 'by-column' property.");
+            }
+
+            return null;
+        }
+
+        if (partitions == null) {
+
+            // 输出日志
+            if (logger.isErrorEnabled()) {
+                logger.error("Router 'hashcode' must have 'partitions' property.");
+            }
+
+            return null;
+        }
+
+        if (pattern == null) {
+
+            // 输出日志
+            if (logger.isErrorEnabled()) {
+                logger.error("Router 'hashcode' must have 'target-pattern' property.");
+            }
+
+            return null;
+        }
+
+        try {
+            int count = Integer.parseInt(partitions);
+
+            // 输出日志
+            if (logger.isDebugEnabled()) {
+                logger.debug("Creating router 'hashcode' [by-column = " + column
+                        + ", partitions = " + count + ", target-pattern = " + pattern + ']');
+            }
+
+            return new StringHashCodeRouter(column, pattern, count);
+
+        } catch (NumberFormatException e) {
+
+            // 输出日志
+            if (logger.isErrorEnabled()) {
+                logger.error("Router 'hashcode' property 'partitions' must be number.");
+            }
+
+            return null;
+        }
+    }
+
 
 }
