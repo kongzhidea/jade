@@ -7,6 +7,8 @@ import java.net.URL;
 /**
  * 实现加载远程服务器的配置文件，并且可以监听文件改变。
  *
+ * 加载远程文件后，会保存到本地， 注意文件执行权限
+ *
  * @author han.liao
  */
 public class RemoteXmlDocConfigurator extends XmlDocConfigurator {
