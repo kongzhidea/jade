@@ -15,7 +15,9 @@ import net.paoding.rose.jade.annotation.ShardBy;
 /**
  * {@link StatementMetaData} 封装、缓存了一个DAO方法的相关信息
  * <p>
- * 
+ *
+ * 获取Dao属性：catalog，metaData.getDAOMetaData().getDAOClass().getAnnotation(DAO.class).catalog()
+ *
  * 
  * @author 王志亮 [qieqie.wang@gmail.com]
  */
