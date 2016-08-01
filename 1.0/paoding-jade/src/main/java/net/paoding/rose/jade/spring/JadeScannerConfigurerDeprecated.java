@@ -26,7 +26,7 @@ import java.util.Set;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * ÍÆ¼öÊ¹ÓÃ JadeScannerConfigurer
+ * æ¨èä½¿ç”¨ JadeScannerConfigurer
  */
 @Deprecated
 public class JadeScannerConfigurerDeprecated implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware, BeanNameAware {

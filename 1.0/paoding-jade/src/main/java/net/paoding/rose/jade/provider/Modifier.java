@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.paoding.rose.jade.annotation.ShardParam;
 import net.paoding.rose.jade.core.GenericUtils;
 
 /**
@@ -27,6 +28,13 @@ public class Modifier {
             8, 1.0f);
 
     private final int parameterCount; // 方法参数数量
+
+    /**
+     * <code>@{@link ShardParam}</code>标注在哪个参数上？(从0开始，负数代表无)－从method中获取并缓存
+     */
+    private int shardParamIndex;
+
+    private ShardParam shardParam;
 
     public Modifier(Definition definition, Method method) {
         this.definition = definition;
@@ -52,6 +60,24 @@ public class Modifier {
                 annotationArray[index] = annotation;
             }
         }
+
+        int shardByIndex = -1;
+        ShardParam shardBy = null;
+        for (int index = 0; index < annotations.length; index++) {
+            for (Annotation annotation : annotations[index]) {
+                if (annotation instanceof ShardParam) {
+                    if (shardByIndex >= 0) {
+                        throw new IllegalArgumentException(
+                                "duplicated @" + ShardParam.class.getName());
+                    }
+                    shardByIndex = index;
+                    shardBy = (ShardParam) annotation;
+                }
+            }
+
+        }
+        this.shardParamIndex = shardByIndex;
+        this.shardParam = shardBy;
     }
 
     public String getName() {
@@ -78,7 +104,7 @@ public class Modifier {
         return method;
     }
 
-    // 获取方法中 某注解里诶包
+    // 获取方法中 某注解里
     @SuppressWarnings("unchecked")
     public <T extends Annotation> T[] getParameterAnnotations(Class<T> annotationClass) {
         T[] annotations = (T[]) parameterAnnotations.get(annotationClass);
@@ -106,5 +132,13 @@ public class Modifier {
     @Override
     public String toString() {
         return definition.getName() + '#' + method.getName();
+    }
+
+    public int getShardParamIndex() {
+        return shardParamIndex;
+    }
+
+    public ShardParam getShardParam() {
+        return shardParam;
     }
 }

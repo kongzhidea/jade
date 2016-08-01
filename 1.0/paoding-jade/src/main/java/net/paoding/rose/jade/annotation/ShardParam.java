@@ -11,25 +11,10 @@ import java.lang.annotation.Target;
  * 
  * @author han.liao [in355hz@gmail.com]
  */
-@Target( { ElementType.METHOD })
+@Target( { ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ShardParam {
 
-    // 匹配所有列
-    final String WIDECARD = "*";
-
-    /**
-     * 指出这个参数作为 SQL 语句中哪个散表字段。
-     * 
-     * @return 对应的散表字段
-     */
-    String name() default WIDECARD;
-
-    /**
-     * 指出这个参数值如何计算。
-     * 
-     * @return 计算参数值
-     */
-    String value();
+    String value() default "";
 }

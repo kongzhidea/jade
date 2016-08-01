@@ -80,9 +80,14 @@ public class JadeScannerConfigurer implements BeanDefinitionRegistryPostProcesso
         scanner.setBasePackage(this.basePackage);
         scanner.setAnnotationClass(this.annotationClass);
         scanner.setApplicationContext(this.applicationContext);
-        scanner.setDataAccessProvider(this.dataAccessProvider);
+        scanner.setDataAccessProvider(getBeanByDefault(this.dataAccessProvider, "jade.dataAccessProvider"));
         scanner.registerFilters();
 
         scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
+    }
+
+    private <T> T getBeanByDefault(T bean, String beanName) {
+        return bean != null ? bean :
+                (T) this.applicationContext.getBean(beanName);
     }
 }
