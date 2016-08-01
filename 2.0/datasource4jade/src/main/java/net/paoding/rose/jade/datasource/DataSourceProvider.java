@@ -8,7 +8,6 @@ import javax.sql.DataSource;
  * 可以自己配置从zk或者数据库中获取配置，然后设置DataSource
  */
 public interface DataSourceProvider {
-    String EMPTY_PATTERN = "";
 
     // 从，分表
     public DataSource getReadDataSource(String catalog, String pattern);
