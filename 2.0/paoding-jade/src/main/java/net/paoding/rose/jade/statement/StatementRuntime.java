@@ -68,5 +68,5 @@ public interface StatementRuntime {
      * @param name
      * @return
      */
-    <T> T getAttribute(String name);
+    Object getAttribute(String name);
 }
