@@ -55,11 +55,18 @@
 
 
 
-
-
-
-
-
+### 源码解析
+* jade依赖spring-jdbctemplate
+    * 当是select请求时候，DefaultRowMapperFactory 根据dao的返回值，来设置不同的rowMapper
+* dao执行sql语句时候， 实际调用 JadeInvocationHandler的invoke方法
+    * 设置paramMap， 把:1和:name两种方式都设置到paramMap
+    * 自己判断sql语句为select或update， 从而获取不同的Querier，其中select需要获取rowMapper
+    * 获取设置的sql解析器（在spring中配置，默认获取为DefaultInterpreterFactory，获取 SystemInterpreter）
+        * SystemInterpreter 会将dao中的sql预计解析为 prepareStatement以及对应的参数
+        * 指定 querier.execute方法
+* JadeScannerConfigurer 可以扫描带DAO的类， 需要配置 packageName
+* SpringDataSourceFactory 可以获取数据源，一般在spring中配置SpringDataSourceFactoryDelegate，这样可以自定义SpringDataSourceFactory，id设置为jade.dataSourceFactory
+* 需要配置 分表，分库， 引入 datasource4jade包
 
 
 
