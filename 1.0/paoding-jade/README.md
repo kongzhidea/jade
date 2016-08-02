@@ -1,7 +1,6 @@
 ###代码出自[https://github.com/paoding-code/paoding-rose](https://github.com/paoding-code/paoding-rose)
 ***
 
-## spring中需要引入  ```<import resource="classpath*:jade/applicationContext*.xml"/>```
 ##需要在spring中配置的类
 * SpringDataSourceFactory 在applicationContext.xml中配置 dataSource 
 * JdbcTemplateDataAccessProvider 先看applicationContext.xml中 先查找 DataSourceFactory， 如果没有DataSourceFactory则默认SpringDataSourceFactory
