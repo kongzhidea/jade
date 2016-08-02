@@ -17,7 +17,7 @@
 
 
     <!-- jade jdbc 数据源 -->
-    <bean id="jade.dataSource.com.ebaoyang.consumer" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="jade.dataSource.com.kk.dao" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <!-- Connection Info -->
         <property name="driverClassName" value="${jdbc.driver}"/>
