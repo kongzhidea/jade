@@ -29,7 +29,7 @@ import java.util.Map;
  * <p/>
  * 配置在系统sql解析器后面
  * <p/>
- * 在spring中配置， SpringInterpreterFactory中会找到此解析器
+ * 在spring中配置， JdbcTemplateDataAccessProvider中会找到此解析器
  */
 @Order(9000)
 public class RouterInterpreter implements SQLInterpreter {
