@@ -36,6 +36,6 @@
     <!-- jade scan-->
     <bean id="jadeScannerConfigurer" class="net.paoding.rose.jade.context.spring.scan.JadeScannerConfigurer">
         <!-- 定义mybatis扫描dao的包 -->
-        <property name="basePackage" value="com.ebaoyang.consumer.dao"/>
+        <property name="basePackage" value="com.kk.dao"/>
     </bean>
 </beans>
