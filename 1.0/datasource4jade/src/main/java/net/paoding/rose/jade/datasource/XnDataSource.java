@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 /**
- * 可以实现主从分离，不支持分表
+ * 可以实现主从分离，支持分表
  */
 public class XnDataSource extends AbstractDataSource {
     public static final String DB_PATTERN = XnDataSource.class.getName() + "#!!!";
