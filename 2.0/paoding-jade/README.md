@@ -1,5 +1,7 @@
-###代码出自[https://github.com/paoding-code/paoding-rose](https://github.com/paoding-code/paoding-rose)
+### 代码出自[https://github.com/paoding-code/paoding-rose](https://github.com/paoding-code/paoding-rose)
 ***
+
+#### 注意懒加载问题，一般不开启  （default-lazy-init="true"，开启懒加载）
 
 ##需要在spring中配置的类
 * SpringDataSourceFactory 在applicationContext.xml中配置 dataSource，推荐配置为SpringDataSourceFactoryDelegate，这样可以自定义SpringDataSourceFactory，id设置为jade.dataSourceFactory
