@@ -3,6 +3,9 @@
 
 #### 注意懒加载问题，一般不开启  （default-lazy-init="true"，开启懒加载）
 
+#### 在项目使用jade时候，只要引入以下配置即可
+#### ```<import resource="classpath*:jade/applicationContext*.xml"/>```
+
 ##需要在spring中配置的类
 * SpringDataSourceFactory 在applicationContext.xml中配置 dataSource，推荐配置为SpringDataSourceFactoryDelegate，这样可以自定义SpringDataSourceFactory，id设置为jade.dataSourceFactory
 * DataAccessFactoryAdapter  对dataSourceFactory的封装， 获取DataAccess
